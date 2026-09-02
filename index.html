@@ -6,29 +6,40 @@
 <title>全球药品进出口关税每日简报看板</title>
 <style>
 :root {
-  --bg: #F8F6F0;
+  --bg: #F4F6FA;
   --bg-card: #FFFFFF;
-  --deep-blue: #102A43;
-  --data-blue: #2978B5;
+  --deep-blue: #0B1F3A;
+  --data-blue: #2563EB;
+  --accent-blue-light: #DBEAFE;
   --accent-orange: #F59E0B;
   --accent-red: #DC3545;
-  --accent-green: #28A745;
-  --text-primary: #1D2733;
-  --text-secondary: #667085;
-  --border: #E6E1D8;
-  --grid-line: #E6E1D8;
-  --zero-bg: #E8F5E9;
-  --zero-text: #2E7D32;
-  --mid-bg: #FFF3E0;
-  --mid-text: #E65100;
-  --high-bg: #FFEBEE;
-  --high-text: #C62828;
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  --font-mono: "SF Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
-  --radius: 8px;
+  --accent-green: #10B981;
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
+  --border: #E5E7EB;
+  --border-light: #F3F4F6;
+  --grid-line: #E5E7EB;
+  --zero-bg: #ECFDF5;
+  --zero-text: #059669;
+  --mid-bg: #FFFBEB;
+  --mid-text: #D97706;
+  --high-bg: #FEF2F2;
+  --high-text: #DC2626;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
   --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 6px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+  --gradient-primary: linear-gradient(135deg, #0B1F3A 0%, #1E40AF 50%, #2563EB 100%);
+  --gradient-card: linear-gradient(180deg, #FFFFFF 0%, #F9FAFB 100%);
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: var(--font-sans);
@@ -36,67 +47,111 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .dashboard {
   max-width: 1800px;
   margin: 0 auto;
-  padding: 24px 40px;
+  padding: 0 40px 40px;
 }
 /* Header */
 .header {
+  background: var(--gradient-primary);
+  margin: 0 -40px;
+  padding: 32px 40px 28px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 16px;
-  margin-bottom: 32px;
-  padding-bottom: 24px;
-  border-bottom: 2px solid var(--deep-blue);
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: 20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+  border-radius: 50%;
 }
 .header-left h1 {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--deep-blue);
+  font-size: 26px;
+  font-weight: 800;
+  color: #FFFFFF;
   letter-spacing: -0.5px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.header-left h1::before {
+  content: '💊';
+  font-size: 28px;
 }
 .header-left .subtitle {
-  font-size: 14px;
-  color: var(--text-secondary);
-  margin-top: 4px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  margin-top: 6px;
+  font-weight: 400;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 0.3px;
 }
 .header-right {
   text-align: right;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 4px;
+  gap: 6px;
+  position: relative;
+  z-index: 1;
 }
 .update-date {
   font-family: var(--font-mono);
   font-size: 13px;
-  color: var(--data-blue);
-  background: rgba(41,120,181,0.08);
-  padding: 4px 12px;
+  color: #FFFFFF;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding: 5px 14px;
   border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.2);
+  font-weight: 500;
 }
 .data-range {
   font-size: 12px;
-  color: var(--text-secondary);
+  color: rgba(255,255,255,0.6);
+  font-weight: 400;
 }
 /* Alert Banner */
 .alert-banner {
-  background: linear-gradient(135deg, #FFF8E1 0%, #FFFDE7 100%);
-  border-left: 4px solid var(--accent-orange);
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+  border: 1px solid #FDE68A;
+  border-left: 4px solid #F59E0B;
   border-radius: var(--radius);
-  padding: 16px 20px;
-  margin-bottom: 28px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
   box-shadow: var(--shadow);
 }
 .alert-banner .alert-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
-  color: #E65100;
-  margin-bottom: 8px;
+  color: #92400E;
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -104,46 +159,83 @@ body {
 .alert-banner .alert-list {
   list-style: none;
   font-size: 13px;
-  color: #4E342E;
+  color: #78350F;
+  columns: 2;
+  column-gap: 32px;
 }
 .alert-banner .alert-list li {
-  padding: 3px 0;
-  padding-left: 16px;
+  padding: 5px 0 5px 18px;
   position: relative;
+  break-inside: avoid;
+  line-height: 1.5;
 }
 .alert-banner .alert-list li::before {
   content: "▸";
   position: absolute;
   left: 0;
-  color: var(--accent-orange);
+  color: #D97706;
   font-weight: bold;
 }
+.alert-toggle {
+  background: none;
+  border: 1px solid #FDE68A;
+  color: #92400E;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--transition);
+}
+.alert-toggle:hover { background: rgba(245,158,11,0.1); }
 /* KPI Row */
 .kpi-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
 .kpi-card {
   background: var(--bg-card);
   border-radius: var(--radius);
-  padding: 20px 24px;
+  padding: 22px 24px;
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+}
+.kpi-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+.kpi-card.zero::before { background: linear-gradient(90deg, #10B981, #34D399); }
+.kpi-card.mid::before { background: linear-gradient(90deg, #F59E0B, #FBBF24); }
+.kpi-card.high::before { background: linear-gradient(90deg, #EF4444, #F87171); }
+.kpi-card.info::before { background: linear-gradient(90deg, #2563EB, #60A5FA); }
+.kpi-card .kpi-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
 }
 .kpi-card .kpi-value {
   font-family: var(--font-mono);
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 800;
   line-height: 1.1;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
+  letter-spacing: -1px;
 }
 .kpi-card .kpi-label {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-secondary);
   font-weight: 500;
+  line-height: 1.4;
 }
 .kpi-card.zero .kpi-value { color: var(--accent-green); }
 .kpi-card.mid .kpi-value { color: var(--accent-orange); }
@@ -151,21 +243,22 @@ body {
 .kpi-card.info .kpi-value { color: var(--data-blue); }
 /* Section */
 .section {
-  margin-bottom: 36px;
+  margin-bottom: 32px;
 }
 .section-title {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--deep-blue);
   margin-bottom: 16px;
-  padding-left: 12px;
-  border-left: 4px solid var(--data-blue);
+  padding-left: 14px;
+  border-left: 3px solid var(--data-blue);
+  letter-spacing: -0.2px;
 }
 /* Chart container */
 .chart-container {
   background: var(--bg-card);
   border-radius: var(--radius);
-  padding: 24px;
+  padding: 28px;
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
   overflow-x: auto;
@@ -174,9 +267,9 @@ body {
 .bar-chart {
   display: flex;
   align-items: flex-end;
-  gap: 6px;
-  height: 260px;
-  padding: 0 8px 32px;
+  gap: 4px;
+  height: 280px;
+  padding: 0 12px 36px;
   position: relative;
   min-width: 700px;
 }
@@ -191,13 +284,13 @@ body {
 }
 .bar-chart .bar {
   width: 100%;
-  max-width: 80px;
-  border-radius: 4px 4px 0 0;
-  transition: opacity 0.2s;
+  max-width: 72px;
+  border-radius: 6px 6px 0 0;
+  transition: var(--transition);
   position: relative;
-  min-height: 2px;
+  min-height: 3px;
 }
-.bar-chart .bar:hover { opacity: 0.8; }
+.bar-chart .bar:hover { opacity: 0.85; transform: scaleY(1.02); transform-origin: bottom; }
 .bar-chart .bar-value {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -213,37 +306,39 @@ body {
   margin-top: 8px;
   white-space: nowrap;
   position: absolute;
-  bottom: -28px;
+  bottom: -30px;
   left: 50%;
   transform: translateX(-50%);
+  font-weight: 500;
 }
 .bar-chart .y-axis {
   position: absolute;
   left: 0;
   top: 0;
-  bottom: 32px;
+  bottom: 36px;
   width: 100%;
   pointer-events: none;
 }
 .bar-chart .y-line {
   position: absolute;
-  left: 40px;
+  left: 44px;
   right: 0;
-  border-top: 1px dashed var(--grid-line);
+  border-top: 1px dashed #E5E7EB;
 }
 .bar-chart .y-label {
   position: absolute;
   left: 0;
   font-family: var(--font-mono);
   font-size: 10px;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   transform: translateY(-50%);
+  font-weight: 500;
 }
 /* Color coding */
-.bar-green { background: linear-gradient(180deg, #43A047, #66BB6A); }
-.bar-orange { background: linear-gradient(180deg, #EF6C00, #FB8C00); }
-.bar-red { background: linear-gradient(180deg, #C62828, #EF5350); }
-.bar-blue { background: linear-gradient(180deg, #1565C0, #42A5F5); }
+.bar-green { background: linear-gradient(180deg, #10B981, #34D399); }
+.bar-orange { background: linear-gradient(180deg, #F59E0B, #FBBF24); }
+.bar-red { background: linear-gradient(180deg, #EF4444, #F87171); }
+.bar-blue { background: linear-gradient(180deg, #2563EB, #60A5FA); }
 /* Data Table */
 .data-table-wrap {
   background: var(--bg-card);
@@ -256,27 +351,29 @@ table.data-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
-  min-width: 800px;
+  min-width: 860px;
 }
 table.data-table thead {
-  background: var(--deep-blue);
+  background: var(--gradient-primary);
   color: #fff;
 }
 table.data-table th {
-  padding: 12px 16px;
+  padding: 14px 16px;
   text-align: left;
   font-weight: 600;
-  font-size: 12px;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   white-space: nowrap;
 }
 table.data-table td {
-  padding: 10px 16px;
-  border-bottom: 1px solid var(--border);
-  vertical-align: top;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: middle;
 }
-table.data-table tbody tr:hover { background: rgba(41,120,181,0.03); }
+table.data-table tbody tr { transition: background 0.15s ease; }
+table.data-table tbody tr:nth-child(even) { background: #FAFBFC; }
+table.data-table tbody tr:hover { background: #EFF6FF; }
 table.data-table .num {
   font-family: var(--font-mono);
   font-weight: 600;
@@ -284,19 +381,20 @@ table.data-table .num {
 }
 .rate-badge {
   display: inline-block;
-  padding: 2px 10px;
-  border-radius: 12px;
+  padding: 3px 12px;
+  border-radius: 6px;
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 700;
+  letter-spacing: -0.3px;
 }
-.rate-zero { background: var(--zero-bg); color: var(--zero-text); }
-.rate-mid { background: var(--mid-bg); color: var(--mid-text); }
-.rate-high { background: var(--high-bg); color: var(--high-text); }
+.rate-zero { background: var(--zero-bg); color: var(--zero-text); border: 1px solid #A7F3D0; }
+.rate-mid { background: var(--mid-bg); color: var(--mid-text); border: 1px solid #FDE68A; }
+.rate-high { background: var(--high-bg); color: var(--high-text); border: 1px solid #FECACA; }
 /* Regional Cards */
 .region-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 .region-card {
@@ -305,47 +403,52 @@ table.data-table .num {
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
   overflow: hidden;
+  transition: var(--transition);
 }
+.region-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
 .region-card .region-header {
-  padding: 14px 20px;
+  padding: 16px 22px;
   font-weight: 700;
   font-size: 15px;
   color: #fff;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  letter-spacing: 0.3px;
 }
-.region-card .region-body { padding: 16px 20px; }
+.region-card .region-body { padding: 8px 22px 18px; }
 .region-card .region-body ul {
   list-style: none;
   font-size: 13px;
 }
 .region-card .region-body li {
-  padding: 6px 0;
-  border-bottom: 1px solid var(--border);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-light);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
 }
 .region-card .region-body li:last-child { border-bottom: none; }
-.region-card .region-body li .country-name { font-weight: 500; }
-.bg-americas { background: linear-gradient(135deg, #1565C0, #1976D2); }
-.bg-europe { background: linear-gradient(135deg, #2E7D32, #43A047); }
-.bg-asia { background: linear-gradient(135deg, #E65100, #F57C00); }
-.bg-asean { background: linear-gradient(135deg, #6A1B9A, #8E24AA); }
+.region-card .region-body li .country-name { font-weight: 600; font-size: 13px; }
+.bg-americas { background: linear-gradient(135deg, #1E40AF, #3B82F6); }
+.bg-europe { background: linear-gradient(135deg, #065F46, #10B981); }
+.bg-asia { background: linear-gradient(135deg, #C2410C, #F97316); }
+.bg-asean { background: linear-gradient(135deg, #7C3AED, #A78BFA); }
 /* Policy Timeline */
 .timeline {
   background: var(--bg-card);
   border-radius: var(--radius);
-  padding: 24px;
+  padding: 28px 32px;
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
 }
 .timeline-item {
   display: flex;
   gap: 16px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border);
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+  position: relative;
 }
 .timeline-item:last-child { border-bottom: none; }
 .timeline-date {
@@ -356,6 +459,10 @@ table.data-table .num {
   font-weight: 600;
   padding-top: 2px;
   white-space: nowrap;
+  background: #EFF6FF;
+  padding: 4px 8px;
+  border-radius: 4px;
+  height: fit-content;
 }
 .timeline-dot {
   width: 10px;
@@ -365,20 +472,21 @@ table.data-table .num {
   margin-top: 6px;
   flex-shrink: 0;
 }
-.timeline-dot.active { background: var(--accent-red); box-shadow: 0 0 0 3px rgba(220,53,69,0.2); }
+.timeline-dot.active { background: var(--accent-red); box-shadow: 0 0 0 3px rgba(220,53,69,0.15); }
 .timeline-content {
   flex: 1;
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1.65;
+  color: #374151;
 }
 .timeline-content strong { color: var(--deep-blue); }
 /* Footer */
 .footer {
-  margin-top: 40px;
-  padding-top: 20px;
+  margin-top: 36px;
+  padding: 24px 0;
   border-top: 1px solid var(--border);
   font-size: 12px;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -387,6 +495,7 @@ table.data-table .num {
 .footer a {
   color: var(--data-blue);
   text-decoration: none;
+  font-weight: 500;
 }
 .footer a:hover { text-decoration: underline; }
 /* Legend */
@@ -397,6 +506,10 @@ table.data-table .num {
   font-size: 12px;
   color: var(--text-secondary);
   flex-wrap: wrap;
+  padding: 10px 16px;
+  background: #F9FAFB;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
 }
 .legend-item {
   display: flex;
@@ -411,40 +524,42 @@ table.data-table .num {
 /* Nav tabs */
 .nav-tabs {
   display: flex;
-  gap: 4px;
-  margin-bottom: 24px;
+  gap: 2px;
+  margin-bottom: 28px;
   background: var(--bg-card);
-  padding: 4px;
+  padding: 5px;
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-sm);
   border: 1px solid var(--border);
   overflow-x: auto;
 }
 .nav-tab {
-  padding: 8px 16px;
-  border-radius: 6px;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-secondary);
   cursor: pointer;
   white-space: nowrap;
   border: none;
   background: transparent;
-  transition: all 0.2s;
+  transition: var(--transition);
+  letter-spacing: 0.2px;
 }
-.nav-tab:hover { color: var(--text-primary); background: rgba(41,120,181,0.06); }
+.nav-tab:hover { color: var(--text-primary); background: #F3F4F6; }
 .nav-tab.active {
   color: #fff;
   background: var(--data-blue);
-  box-shadow: var(--shadow);
+  box-shadow: 0 1px 3px rgba(37,99,235,0.3);
 }
 .tab-panel { display: none; }
-.tab-panel.active { display: block; }
+.tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 /* Sources */
 .sources-section {
   background: var(--bg-card);
   border-radius: var(--radius);
-  padding: 20px 24px;
+  padding: 24px 28px;
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
   margin-top: 24px;
@@ -452,48 +567,210 @@ table.data-table .num {
 .sources-section h3 {
   font-size: 14px;
   color: var(--deep-blue);
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  font-weight: 700;
 }
 .sources-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 8px;
-  font-size: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 10px;
+  font-size: 13px;
 }
 .source-item {
   display: flex;
   gap: 6px;
   align-items: baseline;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s;
 }
+.source-item:hover { background: #F9FAFB; }
 .source-item .src-name {
   font-weight: 600;
   color: var(--text-primary);
 }
+.source-item .src-name a {
+  color: var(--data-blue);
+  text-decoration: none;
+}
+.source-item .src-name a:hover { text-decoration: underline; }
 .source-item .src-type {
   color: var(--text-secondary);
+  font-size: 12px;
 }
+/* HS Search Box */
+.hs-search-box {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+.hs-search-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.hs-search-input {
+  flex: 1;
+  min-width: 280px;
+  padding: 14px 18px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background: #FAFBFC;
+  outline: none;
+  transition: var(--transition);
+}
+.hs-search-input:focus {
+  border-color: var(--data-blue);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+.hs-search-input::placeholder { color: var(--text-muted); }
+.hs-search-btn {
+  padding: 14px 32px;
+  background: var(--gradient-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+  box-shadow: 0 2px 4px rgba(37,99,235,0.2);
+}
+.hs-search-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(37,99,235,0.25); }
+.hs-hints-row {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.hs-hints-label {
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-right: 4px;
+}
+.hs-hint-tag {
+  cursor: pointer;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+.hs-hint-tag.code {
+  background: var(--accent-blue-light);
+  color: var(--data-blue);
+  border-color: #BFDBFE;
+}
+.hs-hint-tag.code:hover { background: #BFDBFE; }
+.hs-hint-tag.keyword {
+  background: #FEF2F2;
+  color: var(--accent-red);
+  border-color: #FECACA;
+}
+.hs-hint-tag.keyword:hover { background: #FECACA; }
+/* HS Result & Action Buttons */
+.hs-result-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.hs-result-toolbar h3 {
+  font-size: 16px;
+  color: var(--deep-blue);
+  font-weight: 700;
+}
+.hs-action-btns {
+  display: flex;
+  gap: 8px;
+}
+.hs-action-btn {
+  padding: 8px 18px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.hs-action-btn.save { background: var(--accent-green); color: #fff; }
+.hs-action-btn.save:hover { background: #059669; }
+.hs-action-btn.export { background: var(--data-blue); color: #fff; }
+.hs-action-btn.export:hover { background: #1D4ED8; }
+.hs-action-btn.export-all { background: var(--deep-blue); color: #fff; }
+.hs-action-btn.export-all:hover { background: #162D50; }
+.hs-action-btn.clear { background: var(--accent-red); color: #fff; }
+.hs-action-btn.clear:hover { background: #B91C1C; }
+.hs-action-btn.delete-single {
+  background: transparent;
+  border: 1px solid var(--accent-red);
+  color: var(--accent-red);
+  padding: 3px 10px;
+  font-size: 11px;
+  border-radius: 6px;
+}
+.hs-action-btn.delete-single:hover { background: var(--high-bg); }
+/* HS Saved Cards */
+.hs-saved-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.hs-saved-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  transition: var(--transition);
+}
+.hs-saved-card:hover { box-shadow: var(--shadow); border-color: var(--data-blue); }
+.hs-saved-card .saved-query { font-weight: 600; color: var(--deep-blue); font-size: 14px; margin-bottom: 4px; }
+.hs-saved-card .saved-meta { color: var(--text-secondary); font-size: 12px; }
+.hs-saved-card .saved-codes { color: var(--data-blue); font-size: 12px; font-family: var(--font-mono); margin-top: 4px; }
 /* Print */
 @media print {
   body { background: #fff; }
   .dashboard { padding: 0; max-width: 100%; }
   .nav-tabs { display: none; }
   .tab-panel { display: block !important; }
+  .header { background: none; color: #000; margin: 0; padding: 16px 0; border-bottom: 2px solid #000; }
+  .header-left h1, .header-left .subtitle { color: #000 !important; }
   .chart-container, .data-table-wrap, .region-card, .timeline, .sources-section { break-inside: avoid; }
 }
 /* Responsive */
 @media (max-width: 768px) {
-  .dashboard { padding: 16px; }
-  .header { flex-direction: column; }
-  .header-left h1 { font-size: 22px; }
-  .kpi-row { grid-template-columns: repeat(2, 1fr); }
-  .kpi-card .kpi-value { font-size: 28px; }
+  .dashboard { padding: 0 16px 24px; }
+  .header { margin: 0 -16px; padding: 24px 16px 20px; flex-direction: column; }
+  .header-left h1 { font-size: 20px; }
+  .kpi-row { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .kpi-card .kpi-value { font-size: 26px; }
   .region-grid { grid-template-columns: 1fr; }
-  .section-title { font-size: 16px; }
+  .section-title { font-size: 15px; }
+  .alert-banner .alert-list { columns: 1; }
+  .nav-tab { padding: 8px 14px; font-size: 12px; }
 }
 @media (max-width: 480px) {
   .kpi-row { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .kpi-card { padding: 14px 16px; }
-  .kpi-card .kpi-value { font-size: 24px; }
+  .kpi-card { padding: 14px 12px; }
+  .kpi-card .kpi-value { font-size: 22px; }
+  .kpi-card .kpi-label { font-size: 11px; }
 }
 </style>
 </head>
@@ -514,42 +791,38 @@ table.data-table .num {
 
   <!-- Alert Banner -->
   <div class="alert-banner">
-    <div class="alert-title">⚠️ 近期重大政策变动预警</div>
+    <div class="alert-title">⚠️ 近期重大政策变动预警 <button class="alert-toggle" onclick="var l=this.parentElement.nextElementSibling;l.style.display=l.style.display==='none'?'':'none';this.textContent=l.style.display==='none'?'展开 ▼':'收起 ▲'">收起 ▲</button></div>
     <ul class="alert-list">
       <li><strong>美国232条款</strong>：专利药最高100%关税，7月31日起对大型药企生效，9月29日起对其他企业生效</li>
       <li><strong>美国301条款</strong>：7月24日起对中国加征12.5%、对印度加征10%（药品制剂豁免，医疗器械不豁免）</li>
       <li><strong>美欧协议</strong>：9月1日起欧盟仿制药及原料恢复MFN零税率，此前适用15%封顶</li>
       <li><strong>RCEP红利</strong>：中日间首次实现药品双边关税减让，2025年中国对RCEP成员国药品出口128.6亿美元（+9.7%）</li>
-          <li><strong>美国对进口药品（仿制药及专利药/原料药）加征关税政策调整</strong>：美国出台进口药品关税新政：仿制药设两年免税期，之后分阶段征收100%及200%关税以鼓励制造业回流；专利药及原料药加征100%关税，但在美有生产计划或达成MFN定价协议的企业可享减免，韩国、日本、欧盟等特定国家享10%-15%优惠税率。（全球、韩国、日本，2026-07-21）</li>
-      <li><strong>多国药品及医疗器械关税政策调整与监管动态盘点</strong>：2026年6月盘点显示，美国药品232条款将于7月31日起对专利药征收关税，第122条10%附加税即将到期（药品Annex IV豁免），USTR拟对多国加征关税；中国自2026年1月1日起降低部分医疗产品进口关税；欧盟对美部分医疗产品重征报复性关税。（美国、中国、欧盟，2026-06）</li>
-      <li><strong>美国对进口专利药及特定原料药征收最高100%关税</strong>：特朗普政府签署公告，对进口专利药及特定原料药征收最高100%的关税，首批大型制造商于2026年7月31日生效，其他企业于9月29日生效。仿制药和生物类似药豁免。特定国家适用较低税率（如欧盟、日本等15%，英国10%）。（全球、欧盟、日本，2026-07-31）</li>
-      <li><strong>Trump administration grants Section 232 tariff exemptions to nine biopharma companies</strong>：The White House announced voluntary agreements with nine biopharmaceutical companies, granting them exemptions or grace periods from Section 232 pharmaceutical tariffs in exchange for $19.6 billion in U.S. manufacturing investments and drug pricing discounts. This brings the total number of manufacturers with MFN and tariff deals to 26, covering 89% of the branded drug market.（United States，2026-09-01）</li>
-          <li><strong>美国对进口仿制药及未生产药品加征关税</strong>：美国近期发布多项药品关税变动公告：7月21日宣布对进口仿制药设两年免税期，2028年起征收100%关税，2029年起征收200%以鼓励制造业回流；4月2日宣布对未在本土生产的专利药及原料药加征100%关税，部分企业可获豁免或低税率。（全球、韩国、日本，2026-07-21）</li>
-      <li><strong>多国医疗及药品关税政策变动：美国药品232关税生效及中国降税</strong>：2026年7月31日起美国依据232条款对专利药征收关税；中国自2026年1月1日起降低人造血管等医疗产品进口关税；USTR于2026年6月2日公布新一轮301调查裁决拟对60个经济体加征关税；欧盟对美国部分医疗产品重新征收报复性关税。（美国、中国、欧盟，2026-07-31）</li>
-      <li><strong>特朗普政府对进口专利药实施最高100%关税及国别差异化税率政策</strong>：特朗普政府签署公告，对进口专利药及特定原料药征收最高100%的232条款关税，首批于2026年7月31日生效，其他企业于9月29日生效。政策包含多项豁免与差异化税率：仿制药和生物类似药豁免；欧盟、日本、韩国、瑞士、列支敦士登适用15%税率，英国适用10%；承诺在美建厂企业可降至20%，结合最惠国定价协议可降至0%。（美国、欧盟、日本，2026-07-31）</li>
-      <li><strong>Trump Administration Grants Section 232 Tariff Exemptions to Nine Biopharma Companies</strong>：The Trump administration announced voluntary agreements with nine mid-sized biopharmaceutical companies, granting them exemptions and delays from Section 232 pharmaceutical tariffs for over two years. In exchange, the companies committed to investing $19.6 billion collectively in U.S. manufacturing, providing discounts on select medicines, and donating APIs to the Strategic Active Pharmaceutical Ingredients Reserve (SAPIR).（United States，2026-09-01）</li>
-          <li><strong>美国宣布对进口仿制药分阶段征收高额关税</strong>：美国宣布对进口仿制药分阶段征收高额关税，设两年免税期，2028年征收100%关税，2029年起征收200%，旨在鼓励仿制药制造业回流美国。专利药、品牌药和创新药现行政策维持不变。（全球，2026-07-21）</li>
-      <li><strong>2026年6月全球医疗器械及药品关税政策变动盘点</strong>：2026年6月2日USTR公布新一轮301调查裁决拟对60个经济体加征关税；美国药品232条款将于7月31日起对专利药征收关税；中国自2026年1月1日起降低部分医疗产品进口关税；欧盟与美国医疗产品贸易摩擦导致报复性关税重新征收。（美国、中国、欧盟，2026-06-02）</li>
-      <li><strong>Trump Administration Establishes Up to 100% Tariff on Imported Patented Pharmaceuticals</strong>：Trump Administration signed a proclamation establishing up to a 100% tariff on imported patented pharmaceuticals and certain ingredients under Section 232, effective July 31, 2026, for large manufacturers. Generics and biosimilars are exempt. Lower country-specific rates apply to the EU, Japan, South Korea, Switzerland, Liechtenstein (15%), and the UK (10%), alongside exemptions for companies with US onshoring plans.（United States、European Union、Japan，2026-07-31）</li>
-      <li><strong>特朗普政府与九家生物制药公司达成药品定价及232条款关税豁免协议</strong>：2026年9月1日，特朗普政府宣布与Alcon、Astellas等9家生物制药公司达成协议。企业承诺在美投资至少196亿美元并提供药品折扣，以换取其产品免受Section 232调查关税的影响（获得豁免或延迟两年以上）。此举使签署MFN定价及关税豁免协议的药企总数达到26家。此外，部分企业还向美国战略原料药储备（SAPIR）捐赠了关键原料药。（美国，2026-09-01）</li>
+      <li><strong>仿制药关税</strong>：设两年免税期，2028年征100%，2029年征200%，鼓励制造业回流</li>
+      <li><strong>232豁免扩展</strong>：9家生物制药公司获豁免，签署协议总数达26家，覆盖89%品牌药市场</li>
+      <li><strong>中国降税</strong>：自2026年1月1日起降低人造血管等医疗产品进口关税</li>
+      <li><strong>欧盟反制</strong>：对美国部分医疗产品重新征收报复性关税</li>
     </ul>
   </div>
 
   <!-- KPI Row -->
   <div class="kpi-row">
     <div class="kpi-card zero">
-      <div class="kpi-value">7/12</div>
-      <div class="kpi-label">零关税经济体数<br>（美/欧/日/英/加/澳/新）</div>
+      <div class="kpi-icon">✅</div>
+      <div class="kpi-value">7/13</div>
+      <div class="kpi-label">零关税经济体数<br>（美/欧/日/英/加/澳/新/瑞）</div>
     </div>
     <div class="kpi-card mid">
+      <div class="kpi-icon">📊</div>
       <div class="kpi-value">8-10%</div>
       <div class="kpi-label">新兴市场关税区间<br>（印度10% / 韩国8% / 巴西8%）</div>
     </div>
     <div class="kpi-card high">
+      <div class="kpi-icon">⚠️</div>
       <div class="kpi-value">100%</div>
       <div class="kpi-label">美国专利药232最高税率<br>（仿制药暂获豁免）</div>
     </div>
     <div class="kpi-card info">
+      <div class="kpi-icon">🌐</div>
       <div class="kpi-value">0%</div>
       <div class="kpi-label">全球主要国家药品出口关税<br>（全部为零 + 退税补贴）</div>
     </div>
@@ -573,7 +846,7 @@ table.data-table .num {
         <div class="legend-item"><span class="legend-dot" style="background:#43A047"></span>零关税（0%）</div>
         <div class="legend-item"><span class="legend-dot" style="background:#FB8C00"></span>低关税（1-5%）</div>
         <div class="legend-item"><span class="legend-dot" style="background:#EF5350"></span>中等关税（6-15%）</div>
-        <div class="legend-item" style="margin-left:16px;border-left:2px solid #E6E1D8;padding-left:12px;"><span style="font-size:12px;color:#667085;">💡 下方附各国增值税/消费税（VAT/GST）对比</span></div>
+        <div class="legend-item" style="margin-left:16px;border-left:2px solid #E5E7EB;padding-left:12px;"><span style="font-size:12px;color:var(--text-secondary);">💡 下方附各国增值税/消费税（VAT/GST）对比</span></div>
       </div>
       <div class="chart-container">
         <div class="bar-chart" id="barChart">
@@ -682,31 +955,31 @@ table.data-table .num {
 
     <div class="section">
       <h2 class="section-title">各国增值税/消费税税率对比</h2>
-      <p style="font-size:13px;color:#667085;margin-bottom:16px;">增值税/消费税是进口药品在通关环节额外征收的国内税，直接影响最终进口成本。不同国家对药品可能适用标准税率或优惠税率。</p>
+      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">增值税/消费税是进口药品在通关环节额外征收的国内税，直接影响最终进口成本。不同国家对药品可能适用标准税率或优惠税率。</p>
       <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);">
         <table style="width:100%;border-collapse:collapse;font-size:12px;">
           <thead>
-            <tr style="background:linear-gradient(135deg,#102A43,#1E40AF);color:#fff;">
-              <th style="padding:10px 12px;text-align:left;width:130px;">国家/地区</th>
-              <th style="padding:10px 12px;text-align:center;width:60px;">类型</th>
-              <th style="padding:10px 12px;text-align:center;width:90px;">标准税率</th>
-              <th style="padding:10px 12px;text-align:left;">药品适用说明</th>
+            <tr style="background:var(--gradient-primary);color:#fff;">
+              <th style="padding:12px 14px;text-align:left;width:130px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;">国家/地区</th>
+              <th style="padding:12px 14px;text-align:center;width:60px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;">类型</th>
+              <th style="padding:12px 14px;text-align:center;width:90px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;">标准税率</th>
+              <th style="padding:12px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;">药品适用说明</th>
             </tr>
           </thead>
           <tbody>
-            <tr style="background:#F0FFF4;"><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇺🇸 美国</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">销售税</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">各州0-10%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">无联邦增值税；各州销售税0-10%不等，部分州对处方药豁免</td></tr>
-            <tr><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇪🇺 欧盟</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">VAT</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">19-27%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">德国19%、法国20%、意大利22%；多数成员国对药品适用5-10%优惠税率</td></tr>
-            <tr style="background:#F8F9FA;"><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇯🇵 日本</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">消费税</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">10%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">统一10%；部分生活必需品适用8%轻减税率</td></tr>
-            <tr><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇬🇧 英国</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">VAT</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">20%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">处方药（NHS报销）免税；OTC药品适用5%优惠税率</td></tr>
-            <tr style="background:#F0FFF4;"><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇨🇭 瑞士</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">VAT</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">8.1%→2.6%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#2E7D32;font-weight:500;">药品适用优惠税率2.6%（标准税率8.1%）</td></tr>
-            <tr><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇨🇦 加拿大</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">GST/HST</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">5-15%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">联邦GST 5%；部分省合并为HST 13-15%；处方药多省豁免</td></tr>
-            <tr style="background:#F8F9FA;"><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇦🇺 澳大利亚</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">GST</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">10%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">统一GST 10%；部分PBS补贴药品免税</td></tr>
-            <tr><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇸🇬 新加坡</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">GST</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">9%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">2024年起从8%上调至9%；药品统一适用9%</td></tr>
-            <tr style="background:#FFF5F5;"><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇨🇳 中国</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">增值税</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">13%/3%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#C62828;font-weight:500;">一般药品13%；抗癌药品及原料药适用3%简易征收</td></tr>
-            <tr><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇰🇷 韩国</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">VAT</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">10%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">统一10%；医疗服务免税，药品适用10%</td></tr>
-            <tr style="background:#F8F9FA;"><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇹🇭 泰国</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">VAT</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">7%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">优惠税率7%（标准10%），延长至2026年底；基本药品豁免</td></tr>
-            <tr><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇧🇷 巴西</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">ICMS</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">17-20%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#C62828;font-weight:500;">州级ICMS 17-20%+联邦PIS/COFINS约9.25%；综合税负极高</td></tr>
-            <tr style="background:#F8F9FA;"><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇮🇳 印度</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">IGST</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">5/12%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">生命 Essential 药品5%；其他药品12%；另征SWS附加税</td></tr>
+            <tr style="background:#ECFDF5;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇺🇸 美国</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">销售税</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">各州0-10%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">无联邦增值税；各州销售税0-10%不等，部分州对处方药豁免</td></tr>
+            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇪🇺 欧盟</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">19-27%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">德国19%、法国20%、意大利22%；多数成员国对药品适用5-10%优惠税率</td></tr>
+            <tr style="background:#FAFBFC;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇯🇵 日本</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">消费税</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">10%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">统一10%；部分生活必需品适用8%轻减税率</td></tr>
+            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇬🇧 英国</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">20%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">处方药（NHS报销）免税；OTC药品适用5%优惠税率</td></tr>
+            <tr style="background:#ECFDF5;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇨🇭 瑞士</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#059669;">8.1%→2.6%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#059669;font-weight:500;">药品适用优惠税率2.6%（标准税率8.1%）</td></tr>
+            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇨🇦 加拿大</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">GST/HST</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">5-15%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">联邦GST 5%；部分省合并为HST 13-15%；处方药多省豁免</td></tr>
+            <tr style="background:#FAFBFC;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇦🇺 澳大利亚</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">GST</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">10%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">统一GST 10%；部分PBS补贴药品免税</td></tr>
+            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇸🇬 新加坡</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">GST</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">9%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">2024年起从8%上调至9%；药品统一适用9%</td></tr>
+            <tr style="background:#FEF2F2;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇨🇳 中国</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">增值税</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#DC2626;">13%/3%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#DC2626;font-weight:500;">一般药品13%；抗癌药品及原料药适用3%简易征收</td></tr>
+            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇰🇷 韩国</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">10%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">统一10%；医疗服务免税，药品适用10%</td></tr>
+            <tr style="background:#FAFBFC;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇹🇭 泰国</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">7%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">优惠税率7%（标准10%），延长至2026年底；基本药品豁免</td></tr>
+            <tr style="background:#FEF2F2;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇧🇷 巴西</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">ICMS</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#DC2626;">17-20%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#DC2626;font-weight:500;">州级ICMS 17-20%+联邦PIS/COFINS约9.25%；综合税负极高</td></tr>
+            <tr style="background:#FAFBFC;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇮🇳 印度</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">IGST</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">5/12%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">生命 Essential 药品5%；其他药品12%；另征SWS附加税</td></tr>
           </tbody>
         </table>
       </div>
@@ -870,11 +1143,11 @@ table.data-table .num {
           <div class="region-header bg-americas">🌎 美洲地区</div>
           <div class="region-body">
             <ul>
-              <li><span class="country-name">美国</span><span class="rate-badge rate-zero">MFN 0%</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">销售税0-10%</span></li>
+              <li><span class="country-name">美国</span><span class="rate-badge rate-zero">MFN 0%</span> <span style="font-size:10px;color:#1E40AF;background:#DBEAFE;padding:2px 8px;border-radius:4px;border:1px solid #BFDBFE;">销售税0-10%</span></li>
               <li><span class="country-name" style="font-size:11px;color:var(--text-secondary)"> ↳ 232专利药</span><span class="rate-badge rate-high">最高100%</span></li>
               <li><span class="country-name" style="font-size:11px;color:var(--text-secondary)"> ↳ 301强迫劳动</span><span class="rate-badge rate-mid">10-12.5%</span></li>
-              <li><span class="country-name">加拿大</span><span class="rate-badge rate-zero">0%</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">GST/HST 5-15%</span></li>
-              <li><span class="country-name">巴西</span><span class="rate-badge rate-mid">8%（综合>60%）</span> <span style="font-size:10px;color:#C62828;background:#FFEBEE;padding:1px 5px;border-radius:3px;">ICMS 17-20%</span></li>
+              <li><span class="country-name">加拿大</span><span class="rate-badge rate-zero">0%</span> <span style="font-size:10px;color:#1E40AF;background:#DBEAFE;padding:2px 8px;border-radius:4px;border:1px solid #BFDBFE;">GST/HST 5-15%</span></li>
+              <li><span class="country-name">巴西</span><span class="rate-badge rate-mid">8%（综合>60%）</span> <span style="font-size:10px;color:#DC2626;background:#FEF2F2;padding:2px 8px;border-radius:4px;border:1px solid #FECACA;">ICMS 17-20%</span></li>
               <li><span class="country-name" style="font-size:11px;color:var(--text-secondary)"> ↳ MERCOSUR内部</span><span class="rate-badge rate-zero">0%</span></li>
             </ul>
           </div>
@@ -884,10 +1157,10 @@ table.data-table .num {
           <div class="region-header bg-europe">🌍 欧洲地区</div>
           <div class="region-body">
             <ul>
-              <li><span class="country-name">欧盟27国</span><span class="rate-badge rate-zero">全部0%</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">VAT 19-27%</span></li>
-              <li><span class="country-name">英国</span><span class="rate-badge rate-zero">0%</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">VAT 20%</span></li>
-              <li><span class="country-name">瑞士</span><span class="rate-badge rate-zero">0%（协议成员）</span> <span style="font-size:10px;color:#2E7D32;background:#E8F5E9;padding:1px 5px;border-radius:3px;">VAT 2.6%优惠</span></li>
-              <li><span class="country-name">挪威</span><span class="rate-badge rate-zero">0%（协议成员）</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">VAT 25%</span></li>
+              <li><span class="country-name">欧盟27国</span><span class="rate-badge rate-zero">全部0%</span> <span style="font-size:10px;color:#1E40AF;background:#DBEAFE;padding:2px 8px;border-radius:4px;border:1px solid #BFDBFE;">VAT 19-27%</span></li>
+              <li><span class="country-name">英国</span><span class="rate-badge rate-zero">0%</span> <span style="font-size:10px;color:#1E40AF;background:#DBEAFE;padding:2px 8px;border-radius:4px;border:1px solid #BFDBFE;">VAT 20%</span></li>
+              <li><span class="country-name">瑞士</span><span class="rate-badge rate-zero">0%（协议成员）</span> <span style="font-size:10px;color:#059669;background:#ECFDF5;padding:2px 8px;border-radius:4px;border:1px solid #A7F3D0;">VAT 2.6%优惠</span></li>
+              <li><span class="country-name">挪威</span><span class="rate-badge rate-zero">0%（协议成员）</span> <span style="font-size:10px;color:#1E40AF;background:#DBEAFE;padding:2px 8px;border-radius:4px;border:1px solid #BFDBFE;">VAT 25%</span></li>
               <li><span class="country-name" style="font-size:11px;color:var(--text-secondary)"> ↳ 美欧15%封顶</span><span class="rate-badge rate-mid">9月起恢复0%</span></li>
             </ul>
           </div>
@@ -911,11 +1184,11 @@ table.data-table .num {
           <div class="region-header bg-asean">🌐 东盟地区</div>
           <div class="region-body">
             <ul>
-              <li><span class="country-name">新加坡</span><span class="rate-badge rate-zero">0%</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">GST 9%</span></li>
+              <li><span class="country-name">新加坡</span><span class="rate-badge rate-zero">0%</span> <span style="font-size:10px;color:#1E40AF;background:#DBEAFE;padding:2px 8px;border-radius:4px;border:1px solid #BFDBFE;">GST 9%</span></li>
               <li><span class="country-name">马来西亚/文莱</span><span class="rate-badge rate-zero">全部0%</span></li>
-              <li><span class="country-name">印度尼西亚</span><span class="rate-badge rate-zero">ATIGA内0%</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">VAT 11%</span></li>
-              <li><span class="country-name">泰国</span><span class="rate-badge rate-mid">基础2.5-10%</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">VAT 7%</span></li>
-              <li><span class="country-name">越南</span><span class="rate-badge rate-mid">基础0-15%</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">VAT 10%</span></li>
+              <li><span class="country-name">印度尼西亚</span><span class="rate-badge rate-zero">ATIGA内0%</span> <span style="font-size:10px;color:#1E40AF;background:#DBEAFE;padding:2px 8px;border-radius:4px;border:1px solid #BFDBFE;">VAT 11%</span></li>
+              <li><span class="country-name">泰国</span><span class="rate-badge rate-mid">基础2.5-10%</span> <span style="font-size:10px;color:#1E40AF;background:#DBEAFE;padding:2px 8px;border-radius:4px;border:1px solid #BFDBFE;">VAT 7%</span></li>
+              <li><span class="country-name">越南</span><span class="rate-badge rate-mid">基础0-15%</span> <span style="font-size:10px;color:#1E40AF;background:#DBEAFE;padding:2px 8px;border-radius:4px;border:1px solid #BFDBFE;">VAT 10%</span></li>
               <li><span class="country-name" style="font-size:11px;color:var(--text-secondary)"> ↳ ATIGA域内</span><span class="rate-badge rate-zero">基本零关税</span></li>
             </ul>
           </div>
@@ -978,42 +1251,42 @@ table.data-table .num {
   <div class="tab-panel" id="tab-hscode">
     <div class="section">
       <h2 class="section-title">HS编码关税税率查询</h2>
-      <p style="color:#667085;font-size:14px;margin-bottom:20px;">输入HS编码（如 3004、3004.90、2941）或关键词（如 疫苗、抗生素、原料药），查询13国进口关税税率</p>
+      <p style="color:var(--text-secondary);font-size:14px;margin-bottom:20px;">输入HS编码（如 3004、3004.90、2941）或关键词（如 疫苗、抗生素、原料药），查询13国进口关税税率</p>
       <div class="hs-search-box">
-        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
-          <input type="text" id="hsSearchInput" placeholder="输入HS编码或关键词，如：3004、疫苗、原料药..." style="flex:1;min-width:280px;padding:12px 16px;border:2px solid #E6E1D8;border-radius:8px;font-size:15px;outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='#2978B5'" onblur="this.style.borderColor='#E6E1D8'">
-          <button onclick="searchHsCode()" style="padding:12px 28px;background:linear-gradient(135deg,#1E40AF,#3B82F6);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity .2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">🔍 查询</button>
+        <div class="hs-search-row">
+          <input type="text" id="hsSearchInput" class="hs-search-input" placeholder="输入HS编码或关键词，如：3004、疫苗、原料药...">
+          <button onclick="searchHsCode()" class="hs-search-btn">🔍 查询</button>
         </div>
-        <div id="hsSearchHints" style="margin-top:10px;font-size:12px;color:#667085;">
-          <span style="margin-right:8px;">示例：</span>
-          <span class="hs-hint-tag" onclick="quickSearch('3004')" style="cursor:pointer;background:#F0F4FF;padding:2px 8px;border-radius:10px;margin:2px;color:#2978B5;">3004</span>
-          <span class="hs-hint-tag" onclick="quickSearch('3002')" style="cursor:pointer;background:#F0F4FF;padding:2px 8px;border-radius:10px;margin:2px;color:#2978B5;">3002</span>
-          <span class="hs-hint-tag" onclick="quickSearch('2941')" style="cursor:pointer;background:#F0F4FF;padding:2px 8px;border-radius:10px;margin:2px;color:#2978B5;">2941</span>
-          <span class="hs-hint-tag" onclick="quickSearch('9018')" style="cursor:pointer;background:#F0F4FF;padding:2px 8px;border-radius:10px;margin:2px;color:#2978B5;">9018</span>
-          <span class="hs-hint-tag" onclick="quickSearch('疫苗')" style="cursor:pointer;background:#FFF5F5;padding:2px 8px;border-radius:10px;margin:2px;color:#DC3545;">疫苗</span>
-          <span class="hs-hint-tag" onclick="quickSearch('原料药')" style="cursor:pointer;background:#FFF5F5;padding:2px 8px;border-radius:10px;margin:2px;color:#DC3545;">原料药</span>
-          <span class="hs-hint-tag" onclick="quickSearch('医疗器械')" style="cursor:pointer;background:#FFF5F5;padding:2px 8px;border-radius:10px;margin:2px;color:#DC3545;">医疗器械</span>
+        <div class="hs-hints-row">
+          <span class="hs-hints-label">示例：</span>
+          <span class="hs-hint-tag code" onclick="quickSearch('3004')">3004</span>
+          <span class="hs-hint-tag code" onclick="quickSearch('3002')">3002</span>
+          <span class="hs-hint-tag code" onclick="quickSearch('2941')">2941</span>
+          <span class="hs-hint-tag code" onclick="quickSearch('9018')">9018</span>
+          <span class="hs-hint-tag keyword" onclick="quickSearch('疫苗')">疫苗</span>
+          <span class="hs-hint-tag keyword" onclick="quickSearch('原料药')">原料药</span>
+          <span class="hs-hint-tag keyword" onclick="quickSearch('医疗器械')">医疗器械</span>
         </div>
       </div>
     </div>
 
     <div class="section" id="hsResultSection" style="display:none;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-        <h3 style="font-size:16px;color:#102A43;" id="hsResultTitle">查询结果</h3>
-        <div style="display:flex;gap:8px;">
-          <button onclick="saveQueryResult()" style="padding:8px 18px;background:#28A745;color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer;font-weight:500;">💾 保存到本地</button>
-          <button onclick="exportCurrentExcel()" style="padding:8px 18px;background:#17A2B8;color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer;font-weight:500;" onmouseover="this.style.background='#138496'" onmouseout="this.style.background='#17A2B8'">📊 导出Excel</button>
+      <div class="hs-result-toolbar">
+        <h3 id="hsResultTitle">查询结果</h3>
+        <div class="hs-action-btns">
+          <button onclick="saveQueryResult()" class="hs-action-btn save">💾 保存到本地</button>
+          <button onclick="exportCurrentExcel()" class="hs-action-btn export">📊 导出Excel</button>
         </div>
       </div>
       <div id="hsResultContent"></div>
     </div>
 
     <div class="section" id="hsSavedSection" style="display:none;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-        <h3 style="font-size:16px;color:#102A43;">📁 已保存的查询记录</h3>
-        <div style="display:flex;gap:8px;">
-          <button onclick="exportAllSaved()" style="padding:8px 16px;background:#102A43;color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer;">📤 导出全部</button>
-          <button onclick="clearSaved()" style="padding:8px 16px;background:#DC3545;color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer;">🗑️ 清空</button>
+      <div class="hs-result-toolbar">
+        <h3>📁 已保存的查询记录</h3>
+        <div class="hs-action-btns">
+          <button onclick="exportAllSaved()" class="hs-action-btn export-all">📤 导出全部</button>
+          <button onclick="clearSaved()" class="hs-action-btn clear">🗑️ 清空</button>
         </div>
       </div>
       <div id="hsSavedContent"></div>
@@ -1048,7 +1321,7 @@ table.data-table .num {
   <!-- Footer -->
   <footer class="footer">
     <div>⚠️ 本看板数据仅供参考，具体通关请以各国海关当期公布税率为准。AI生成内容，不构成贸易决策建议。</div>
-    <div>关税顾问 · 国际部内部参考 · <span style="font-size:11px;opacity:0.7;">v3.1（回滚标签：v2.0-pre-vat）</span></div>
+    <div>关税顾问 · 国际部内部参考 · <span style="font-size:11px;opacity:0.7;">v3.2（回滚标签：v2.0-pre-vat）</span></div>
   </footer>
 
 </main>
@@ -1153,7 +1426,7 @@ function searchHsCode() {
     document.getElementById('hsResultSection').style.display = 'block';
     document.getElementById('hsResultTitle').textContent = '未找到匹配结果';
     document.getElementById('hsResultContent').innerHTML =
-      '<p style="color:#667085;text-align:center;padding:30px;">未找到与 "' + input + '" 相关的HS编码或产品类别。<br>请尝试其他编码或关键词，如：3004、2941、9018、疫苗、原料药、医疗器械。</p>';
+      '<div style="text-align:center;padding:40px;background:#fff;border-radius:12px;border:1px solid #E5E7EB;box-shadow:0 1px 3px rgba(0,0,0,0.06);"><p style="font-size:40px;margin-bottom:12px;">🔍</p><p style="color:#6B7280;font-size:14px;line-height:1.8;">未找到与 "<strong style="color:#0B1F3A;">' + input + '</strong>" 相关的HS编码或产品类别。<br>请尝试其他编码或关键词，如：3004、2941、9018、疫苗、原料药、医疗器械。</p></div>';
     return;
   }
 
@@ -1175,24 +1448,24 @@ function searchHsCode() {
              rate.toFixed(1) + '%</span>';
     };
 
-    html += '<div style="background:#fff;border:1px solid var(--border);border-radius:12px;margin-bottom:32px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06);">';
+    html += '<div style="background:#fff;border:1px solid #E5E7EB;border-radius:12px;margin-bottom:32px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);">';
     // Card Header
-    html += '<div style="background:linear-gradient(135deg,#102A43,#1E40AF);color:#fff;padding:20px 28px;">';
+    html += '<div style="background:linear-gradient(135deg,#0B1F3A 0%,#1E40AF 50%,#2563EB 100%);color:#fff;padding:22px 28px;">';
     html += '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">';
     html += '<span style="font-family:var(--font-mono);font-size:22px;font-weight:700;letter-spacing:0.5px;">HS ' + item.hs + '</span>';
-    html += '<span style="background:rgba(255,255,255,0.18);padding:5px 14px;border-radius:16px;font-size:13px;font-weight:500;backdrop-filter:blur(4px);">' + item.cat + '</span>';
+    html += '<span style="background:rgba(255,255,255,0.15);padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500;border:1px solid rgba(255,255,255,0.2);">' + item.cat + '</span>';
     html += '</div>';
-    html += '<div style="font-size:14px;opacity:0.9;margin-top:8px;line-height:1.5;">' + item.desc + '</div>';
+    html += '<div style="font-size:14px;opacity:0.85;margin-top:8px;line-height:1.6;color:rgba(255,255,255,0.9);">' + item.desc + '</div>';
     html += '</div>';
     // Table Body
     html += '<div style="padding:24px 28px;">';
     html += '<table style="width:100%;border-collapse:separate;border-spacing:0;font-size:14px;">';
     // Table Header
     html += '<thead><tr>';
-    html += '<th style="padding:14px 16px;text-align:left;border-bottom:2px solid #D4D0C8;font-weight:600;color:#102A43;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;min-width:140px;">🏳️ 国家/地区</th>';
-    html += '<th style="padding:14px 16px;text-align:center;border-bottom:2px solid #D4D0C8;font-weight:600;color:#102A43;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;width:130px;">MFN 关税</th>';
-    html += '<th style="padding:14px 16px;text-align:center;border-bottom:2px solid #D4D0C8;font-weight:600;color:#102A43;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;width:160px;">增值税/消费税</th>';
-    html += '<th style="padding:14px 16px;text-align:left;border-bottom:2px solid #D4D0C8;font-weight:600;color:#102A43;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;">备注说明</th>';
+    html += '<th style="padding:14px 16px;text-align:left;border-bottom:2px solid #E5E7EB;font-weight:600;color:#0B1F3A;font-size:11px;text-transform:uppercase;letter-spacing:0.8px;min-width:140px;">🏳️ 国家/地区</th>';
+    html += '<th style="padding:14px 16px;text-align:center;border-bottom:2px solid #E5E7EB;font-weight:600;color:#0B1F3A;font-size:11px;text-transform:uppercase;letter-spacing:0.8px;width:130px;">MFN 关税</th>';
+    html += '<th style="padding:14px 16px;text-align:center;border-bottom:2px solid #E5E7EB;font-weight:600;color:#0B1F3A;font-size:11px;text-transform:uppercase;letter-spacing:0.8px;width:160px;">增值税/消费税</th>';
+    html += '<th style="padding:14px 16px;text-align:left;border-bottom:2px solid #E5E7EB;font-weight:600;color:#0B1F3A;font-size:11px;text-transform:uppercase;letter-spacing:0.8px;">备注说明</th>';
     html += '</tr></thead><tbody>';
 
     let rowIndex = 0;
@@ -1205,32 +1478,32 @@ function searchHsCode() {
       const vatType = country.vatType || '';
       const vatNote = country.vatNote || '';
       // Zebra stripe + rate-based tinting
-      const zebraBg = rowIndex % 2 === 0 ? '#FAFAF7' : '#FFFFFF';
-      const rowBg = mfn > 5 ? '#FFF8F8' : (mfn > 0 && mfn <= 5 ? '#FEFEF8' : zebraBg);
-      const borderLeft = mfn > 5 ? 'border-left:3px solid #DC3545;' : (mfn > 0 ? 'border-left:3px solid #F59E0B;' : 'border-left:3px solid #28A745;');
-      html += '<tr style="background:' + rowBg + ';transition:background .15s;" onmouseover="this.style.background=\'#F0F4FF\'" onmouseout="this.style.background=\'' + rowBg + '\'">';
+      const zebraBg = rowIndex % 2 === 0 ? '#FAFBFC' : '#FFFFFF';
+      const rowBg = mfn > 5 ? '#FEF2F2' : (mfn > 0 && mfn <= 5 ? '#FFFBEB' : zebraBg);
+      const borderLeft = mfn > 5 ? 'border-left:3px solid #DC2626;' : (mfn > 0 ? 'border-left:3px solid #F59E0B;' : 'border-left:3px solid #10B981;');
+      html += '<tr style="background:' + rowBg + ';transition:background .15s;" onmouseover="this.style.background=\'#EFF6FF\'" onmouseout="this.style.background=\'' + rowBg + '\'">';
       // Country cell
-      html += '<td style="padding:14px 16px;border-bottom:1px solid #EDE8E0;' + borderLeft + '">';
+      html += '<td style="padding:14px 16px;border-bottom:1px solid #F3F4F6;' + borderLeft + '">';
       html += '<div style="display:flex;align-items:center;gap:10px;">';
       html += '<span style="font-size:22px;">' + country.flag + '</span>';
-      html += '<span style="font-weight:600;font-size:14px;color:#102A43;">' + country.name + '</span>';
+      html += '<span style="font-weight:600;font-size:14px;color:#0B1F3A;">' + country.name + '</span>';
       html += '</div></td>';
       // MFN rate cell
-      html += '<td style="padding:14px 16px;border-bottom:1px solid #EDE8E0;text-align:center;vertical-align:middle;">';
+      html += '<td style="padding:14px 16px;border-bottom:1px solid #F3F4F6;text-align:center;vertical-align:middle;">';
       html += rateBadge(mfn);
       html += '</td>';
       // VAT cell
-      html += '<td style="padding:14px 16px;border-bottom:1px solid #EDE8E0;text-align:center;vertical-align:middle;">';
-      html += '<div style="display:inline-block;background:#E8F4FD;color:#0D47A1;padding:6px 14px;border-radius:6px;font-weight:700;font-size:14px;font-family:var(--font-mono);border:1px solid #B3D9F2;min-width:70px;">' + vat + '</div>';
-      html += '<div style="font-size:11px;color:#5C7A99;margin-top:4px;font-weight:500;">' + vatType + '</div>';
-      if (vatNote) { html += '<div style="font-size:10px;color:#99AABB;margin-top:2px;line-height:1.3;">' + vatNote + '</div>'; }
+      html += '<td style="padding:14px 16px;border-bottom:1px solid #F3F4F6;text-align:center;vertical-align:middle;">';
+      html += '<div style="display:inline-block;background:#DBEAFE;color:#1E40AF;padding:6px 14px;border-radius:6px;font-weight:700;font-size:14px;font-family:var(--font-mono);border:1px solid #BFDBFE;min-width:70px;">' + vat + '</div>';
+      html += '<div style="font-size:11px;color:#6B7280;margin-top:4px;font-weight:500;">' + vatType + '</div>';
+      if (vatNote) { html += '<div style="font-size:10px;color:#9CA3AF;margin-top:2px;line-height:1.3;">' + vatNote + '</div>'; }
       html += '</td>';
       // Note cell
-      html += '<td style="padding:14px 16px;border-bottom:1px solid #EDE8E0;vertical-align:middle;">';
+      html += '<td style="padding:14px 16px;border-bottom:1px solid #F3F4F6;vertical-align:middle;">';
       if (note) {
-        html += '<span style="display:inline-block;background:#FFF3E0;color:#BF360C;padding:4px 10px;border-radius:4px;font-size:12px;font-weight:500;border:1px solid #FFE0B2;line-height:1.4;">⚠️ ' + note + '</span>';
+        html += '<span style="display:inline-block;background:#FEF3C7;color:#92400E;padding:4px 10px;border-radius:4px;font-size:12px;font-weight:500;border:1px solid #FDE68A;line-height:1.4;">⚠️ ' + note + '</span>';
       } else {
-        html += '<span style="color:#B0B0B0;font-size:13px;">—</span>';
+        html += '<span style="color:#9CA3AF;font-size:13px;">—</span>';
       }
       html += '</td>';
       html += '</tr>';
@@ -1274,16 +1547,16 @@ function loadSavedRecords() {
   if (saved.length === 0) { section.style.display = 'none'; return; }
 
   section.style.display = 'block';
-  let html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">';
+  let html = '<div class="hs-saved-grid">';
   saved.forEach((item, idx) => {
     const date = item.timestamp ? item.timestamp.substring(0, 10) : '未知';
     const count = item.results ? item.results.length : 0;
     const hsList = (item.results || []).map(r => r.hs).slice(0, 3).join(', ');
-    html += '<div style="background:#F8F6F0;border:1px solid var(--border);border-radius:6px;padding:12px;font-size:13px;">';
-    html += '<div style="font-weight:600;color:#102A43;margin-bottom:4px;">🔍 ' + item.query + '</div>';
-    html += '<div style="color:#667085;font-size:12px;">' + date + ' · ' + count + ' 条结果</div>';
-    html += '<div style="color:#2978B5;font-size:12px;margin-top:4px;font-family:var(--font-mono);">' + hsList + '</div>';
-    html += '<button onclick="deleteSavedRecord(' + idx + ')" style="margin-top:8px;padding:3px 10px;background:transparent;border:1px solid #DC3545;color:#DC3545;border-radius:4px;font-size:11px;cursor:pointer;">删除</button>';
+    html += '<div class="hs-saved-card">';
+    html += '<div class="saved-query">🔍 ' + item.query + '</div>';
+    html += '<div class="saved-meta">' + date + ' · ' + count + ' 条结果</div>';
+    html += '<div class="saved-codes">' + hsList + '</div>';
+    html += '<button onclick="deleteSavedRecord(' + idx + ')" class="hs-action-btn delete-single" style="margin-top:8px;">删除</button>';
     html += '</div>';
   });
   html += '</div>';
