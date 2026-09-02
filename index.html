@@ -891,7 +891,10 @@ table.data-table .num {
     <div class="section" id="hsResultSection" style="display:none;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
         <h3 style="font-size:16px;color:#102A43;" id="hsResultTitle">查询结果</h3>
-        <button onclick="saveQueryResult()" style="padding:8px 18px;background:#28A745;color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer;font-weight:500;">💾 保存到本地</button>
+        <div style="display:flex;gap:8px;">
+          <button onclick="saveQueryResult()" style="padding:8px 18px;background:#28A745;color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer;font-weight:500;">💾 保存到本地</button>
+          <button onclick="exportCurrentExcel()" style="padding:8px 18px;background:#17A2B8;color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer;font-weight:500;" onmouseover="this.style.background='#138496'" onmouseout="this.style.background='#17A2B8'">📊 导出Excel</button>
+        </div>
       </div>
       <div id="hsResultContent"></div>
     </div>
@@ -1157,6 +1160,172 @@ function exportAllSaved() {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+
+// ===== Excel Export Functions =====
+function buildExcelHeader(title, subtitle) {
+  let h = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
+  h += '<head><meta charset="UTF-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
+  h += '<x:Name>HS编码关税查询</x:Name>';
+  h += '<x:WorksheetOptions><x:DisplayRightToLeft/></x:WorksheetOptions>';
+  h += '</x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>';
+  h += '<table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;font-family:Microsoft YaHei,Arial,sans-serif;font-size:12px;">';
+  // Title
+  h += '<tr><td colspan="5" style="background:#102A43;color:#FFFFFF;font-size:16px;font-weight:bold;padding:12px;text-align:center;">' + title + '</td></tr>';
+  h += '<tr><td colspan="5" style="background:#E8EAED;color:#333333;font-size:10px;padding:6px;text-align:center;">' + subtitle + '</td></tr>';
+  h += '<tr><td colspan="5" style="height:6px;border:none;"></td></tr>';
+  return h;
+}
+
+function excelRateStyle(mfn) {
+  if (mfn === 0) return 'background:#E8F5E9;color:#2E7D32;font-weight:bold;';
+  if (mfn <= 5) return 'background:#FFF8E1;color:#E65100;font-weight:bold;';
+  return 'background:#FFEBEE;color:#C62828;font-weight:bold;';
+}
+
+function downloadExcel(html, filename) {
+  const blob = new Blob([html], {type: 'application/vnd.ms-excel;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function exportCurrentExcel() {
+  if (!currentSearchResult || !currentSearchResult.results || currentSearchResult.results.length === 0) {
+    alert('没有可导出的查询结果，请先进行查询');
+    return;
+  }
+  const data = currentSearchResult;
+  const now = new Date();
+  const dateStr = now.toISOString().substring(0, 10);
+  const timeStr = now.toTimeString().substring(0, 5);
+
+  let html = buildExcelHeader(
+    '药品关税税率查询报告',
+    '华仁供应链 · 国际部 | 查询时间：' + dateStr + ' ' + timeStr + ' | 数据来源：各国海关官方'
+  );
+
+  data.results.forEach(function(item, idx) {
+    if (idx > 0) {
+      html += '<tr><td colspan="5" style="height:10px;border:none;"></td></tr>';
+    }
+    // HS code group header
+    html += '<tr>';
+    html += '<td colspan="3" style="background:#1E40AF;color:#FFFFFF;font-size:13px;font-weight:bold;padding:10px;">HS ' + item.hs + ' - ' + item.desc + '</td>';
+    html += '<td colspan="2" style="background:#1E40AF;color:#FFFFFF;font-size:11px;padding:10px;text-align:right;">' + item.cat + '</td>';
+    html += '</tr>';
+    // Column headers
+    html += '<tr style="background:#E8EAED;font-weight:bold;">';
+    html += '<th style="padding:8px 10px;width:120px;text-align:left;border:1px solid #CCCCCC;">国家/地区</th>';
+    html += '<th style="padding:8px 10px;width:80px;text-align:center;border:1px solid #CCCCCC;">国家代码</th>';
+    html += '<th style="padding:8px 10px;width:100px;text-align:center;border:1px solid #CCCCCC;">MFN关税税率</th>';
+    html += '<th style="padding:8px 10px;width:200px;text-align:left;border:1px solid #CCCCCC;">备注/说明</th>';
+    html += '<th style="padding:8px 10px;width:100px;text-align:center;border:1px solid #CCCCCC;">关税水平</th>';
+    html += '</tr>';
+    // Country rows
+    Object.keys(item.rates).forEach(function(code) {
+      const country = COUNTRY_INFO[code];
+      const rateData = item.rates[code];
+      const mfn = rateData.mfn;
+      const note = rateData.note || '-';
+      let level = '正常';
+      if (mfn === 0) level = '零关税';
+      else if (mfn <= 5) level = '低关税';
+      else level = '需关注';
+      html += '<tr>';
+      html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;">' + country.flag + ' ' + country.name + '</td>';
+      html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;text-align:center;font-family:Consolas,monospace;">' + code + '</td>';
+      html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;text-align:center;' + excelRateStyle(mfn) + '">' + mfn.toFixed(1) + '%</td>';
+      html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;font-size:11px;">' + note + '</td>';
+      html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;text-align:center;font-size:11px;">' + level + '</td>';
+      html += '</tr>';
+    });
+  });
+
+  // Footer
+  html += '<tr><td colspan="5" style="height:8px;border:none;"></td></tr>';
+  html += '<tr><td colspan="5" style="background:#F8F9FA;font-size:10px;color:#667085;padding:8px;text-align:center;">';
+  html += '本报告由药品关税看板系统自动生成 · 数据仅供参考，以各国海关官方公告为准 · 华仁供应链国际部';
+  html += '</td></tr>';
+  html += '</table></body></html>';
+
+  const queryClean = data.query.replace(/[^a-zA-Z0-9\u4e00-\u9fa5]/g, '_');
+  downloadExcel(html, 'HS编码查询_' + queryClean + '_' + dateStr + '.xls');
+  alert('✅ Excel文件已导出：HS编码查询_' + queryClean + '_' + dateStr + '.xls');
+}
+
+function exportAllSavedExcel() {
+  const saved = JSON.parse(localStorage.getItem('hs_code_queries') || '[]');
+  if (saved.length === 0) { alert('没有保存的记录可导出'); return; }
+  const dateStr = new Date().toISOString().substring(0, 10);
+
+  let html = buildExcelHeader(
+    '药品关税税率查询报告（全部保存记录）',
+    '华仁供应链 · 国际部 | 导出时间：' + dateStr + ' | 共 ' + saved.length + ' 条查询 | 数据来源：各国海关官方'
+  );
+
+  let globalIdx = 0;
+  saved.forEach(function(query) {
+    if (!query.results || query.results.length === 0) return;
+    const qDate = query.timestamp ? query.timestamp.substring(0, 10) : '未知';
+
+    // Query separator header
+    html += '<tr><td colspan="5" style="height:8px;border:none;"></td></tr>';
+    html += '<tr>';
+    html += '<td colspan="5" style="background:#6C757D;color:#FFFFFF;font-size:12px;font-weight:bold;padding:8px;">';
+    html += '查询 #' + (globalIdx + 1) + '：' + query.query + ' （' + qDate + '，' + query.results.length + ' 条匹配）';
+    html += '</td></tr>';
+
+    query.results.forEach(function(item) {
+      // HS code group header
+      html += '<tr>';
+      html += '<td colspan="3" style="background:#1E40AF;color:#FFFFFF;font-size:13px;font-weight:bold;padding:10px;">HS ' + item.hs + ' - ' + item.desc + '</td>';
+      html += '<td colspan="2" style="background:#1E40AF;color:#FFFFFF;font-size:11px;padding:10px;text-align:right;">' + item.cat + '</td>';
+      html += '</tr>';
+      // Column headers
+      html += '<tr style="background:#E8EAED;font-weight:bold;">';
+      html += '<th style="padding:8px 10px;width:120px;text-align:left;border:1px solid #CCCCCC;">国家/地区</th>';
+      html += '<th style="padding:8px 10px;width:80px;text-align:center;border:1px solid #CCCCCC;">国家代码</th>';
+      html += '<th style="padding:8px 10px;width:100px;text-align:center;border:1px solid #CCCCCC;">MFN关税税率</th>';
+      html += '<th style="padding:8px 10px;width:200px;text-align:left;border:1px solid #CCCCCC;">备注/说明</th>';
+      html += '<th style="padding:8px 10px;width:100px;text-align:center;border:1px solid #CCCCCC;">关税水平</th>';
+      html += '</tr>';
+      // Country rows
+      Object.keys(item.rates).forEach(function(code) {
+        const country = COUNTRY_INFO[code];
+        const rateData = item.rates[code];
+        const mfn = rateData.mfn;
+        const note = rateData.note || '-';
+        let level = '正常';
+        if (mfn === 0) level = '零关税';
+        else if (mfn <= 5) level = '低关税';
+        else level = '需关注';
+        html += '<tr>';
+        html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;">' + country.flag + ' ' + country.name + '</td>';
+        html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;text-align:center;font-family:Consolas,monospace;">' + code + '</td>';
+        html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;text-align:center;' + excelRateStyle(mfn) + '">' + mfn.toFixed(1) + '%</td>';
+        html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;font-size:11px;">' + note + '</td>';
+        html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;text-align:center;font-size:11px;">' + level + '</td>';
+        html += '</tr>';
+      });
+    });
+    globalIdx++;
+  });
+
+  // Footer
+  html += '<tr><td colspan="5" style="height:8px;border:none;"></td></tr>';
+  html += '<tr><td colspan="5" style="background:#F8F9FA;font-size:10px;color:#667085;padding:8px;text-align:center;">';
+  html += '本报告由药品关税看板系统自动生成 · 共 ' + globalIdx + ' 条查询记录 · 数据仅供参考，以各国海关官方公告为准 · 华仁供应链国际部';
+  html += '</td></tr>';
+  html += '</table></body></html>';
+
+  downloadExcel(html, 'HS编码查询_全部记录_' + dateStr + '.xls');
+  alert('✅ Excel文件已导出：HS编码查询_全部记录_' + dateStr + '.xls（共 ' + globalIdx + ' 条查询）');
 }
 
 // Load saved records on page load
