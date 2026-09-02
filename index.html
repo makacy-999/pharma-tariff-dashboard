@@ -561,6 +561,7 @@ table.data-table .num {
     <button class="nav-tab" data-tab="detail" role="tab" aria-selected="false">分国明细</button>
     <button class="nav-tab" data-tab="regional" role="tab" aria-selected="false">区域分析</button>
     <button class="nav-tab" data-tab="policy" role="tab" aria-selected="false">政策动态</button>
+    <button class="nav-tab" data-tab="hscode" role="tab" aria-selected="false">HS编码查询</button>
     <button class="nav-tab" data-tab="sources" role="tab" aria-selected="false">数据来源</button>
   </nav>
 
@@ -854,6 +855,49 @@ table.data-table .num {
     </div>
   </div>
 
+  <!-- Tab: HS Code Query -->
+  <div class="tab-panel" id="tab-hscode">
+    <div class="section">
+      <h2 class="section-title">HS编码关税税率查询</h2>
+      <p style="color:#667085;font-size:14px;margin-bottom:20px;">输入HS编码（如 3004、3004.90、2941）或关键词（如 疫苗、抗生素、原料药），查询12国进口关税税率</p>
+      <div class="hs-search-box">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <input type="text" id="hsSearchInput" placeholder="输入HS编码或关键词，如：3004、疫苗、原料药..." style="flex:1;min-width:280px;padding:12px 16px;border:2px solid #E6E1D8;border-radius:8px;font-size:15px;outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='#2978B5'" onblur="this.style.borderColor='#E6E1D8'">
+          <button onclick="searchHsCode()" style="padding:12px 28px;background:linear-gradient(135deg,#1E40AF,#3B82F6);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity .2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">🔍 查询</button>
+        </div>
+        <div id="hsSearchHints" style="margin-top:10px;font-size:12px;color:#667085;">
+          <span style="margin-right:8px;">示例：</span>
+          <span class="hs-hint-tag" onclick="quickSearch('3004')" style="cursor:pointer;background:#F0F4FF;padding:2px 8px;border-radius:10px;margin:2px;color:#2978B5;">3004</span>
+          <span class="hs-hint-tag" onclick="quickSearch('3002')" style="cursor:pointer;background:#F0F4FF;padding:2px 8px;border-radius:10px;margin:2px;color:#2978B5;">3002</span>
+          <span class="hs-hint-tag" onclick="quickSearch('2941')" style="cursor:pointer;background:#F0F4FF;padding:2px 8px;border-radius:10px;margin:2px;color:#2978B5;">2941</span>
+          <span class="hs-hint-tag" onclick="quickSearch('9018')" style="cursor:pointer;background:#F0F4FF;padding:2px 8px;border-radius:10px;margin:2px;color:#2978B5;">9018</span>
+          <span class="hs-hint-tag" onclick="quickSearch('疫苗')" style="cursor:pointer;background:#FFF5F5;padding:2px 8px;border-radius:10px;margin:2px;color:#DC3545;">疫苗</span>
+          <span class="hs-hint-tag" onclick="quickSearch('原料药')" style="cursor:pointer;background:#FFF5F5;padding:2px 8px;border-radius:10px;margin:2px;color:#DC3545;">原料药</span>
+          <span class="hs-hint-tag" onclick="quickSearch('医疗器械')" style="cursor:pointer;background:#FFF5F5;padding:2px 8px;border-radius:10px;margin:2px;color:#DC3545;">医疗器械</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="hsResultSection" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <h3 style="font-size:16px;color:#102A43;" id="hsResultTitle">查询结果</h3>
+        <button onclick="saveQueryResult()" style="padding:8px 18px;background:#28A745;color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer;font-weight:500;">💾 保存到本地</button>
+      </div>
+      <div id="hsResultContent"></div>
+    </div>
+
+    <div class="section" id="hsSavedSection" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <h3 style="font-size:16px;color:#102A43;">📁 已保存的查询记录</h3>
+        <div style="display:flex;gap:8px;">
+          <button onclick="exportAllSaved()" style="padding:8px 16px;background:#102A43;color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer;">📤 导出全部</button>
+          <button onclick="clearSaved()" style="padding:8px 16px;background:#DC3545;color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer;">🗑️ 清空</button>
+        </div>
+      </div>
+      <div id="hsSavedContent"></div>
+    </div>
+  </div>
+
   <!-- Tab: Sources -->
   <div class="tab-panel" id="tab-sources">
     <div class="section">
@@ -903,6 +947,209 @@ document.querySelectorAll('.nav-tab').forEach(tab => {
 const now = new Date();
 const dateStr = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
 document.getElementById('updateDate').textContent = dateStr + ' 更新';
+
+// ===== HS Code Query System =====
+const COUNTRY_INFO = {
+  US:{name:"美国",flag:"🇺🇸"},EU:{name:"欧盟",flag:"🇪🇺"},JP:{name:"日本",flag:"🇯🇵"},
+  GB:{name:"英国",flag:"🇬🇧"},CA:{name:"加拿大",flag:"🇨🇦"},AU:{name:"澳大利亚",flag:"🇦🇺"},
+  SG:{name:"新加坡",flag:"🇸🇬"},CN:{name:"中国",flag:"🇨🇳"},KR:{name:"韩国",flag:"🇰🇷"},
+  TH:{name:"泰国",flag:"🇹🇭"},BR:{name:"巴西",flag:"🇧🇷"},IN:{name:"印度",flag:"🇮🇳"}
+};
+
+const TARIFF_DB = [
+  {hs:"3004.90",desc:"混合或非混合产品构成的药品（治病或防病用），已配定剂量或制成零售包装",cat:"成品药（制剂）",rates:{US:{mfn:3.2,note:"232条款另征最高100%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2.5,note:"暂定2.5%，可降至0-2%"},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10}}},
+  {hs:"3004.10",desc:"含有青霉素或青霉素烷酸结构的衍生物制剂",cat:"抗生素类制剂",rates:{US:{mfn:3.2,note:"232条款另征最高100%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10}}},
+  {hs:"3004",desc:"混合或非混合产品构成的药品（已配定剂量/零售包装）— 大类",cat:"成品药（制剂）",rates:{US:{mfn:3.2,note:"232条款另征最高100%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2.5},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10}}},
+  {hs:"3002.14",desc:"免疫制品：疫苗、毒素及类毒素",cat:"疫苗/免疫制品",rates:{US:{mfn:0,note:"232条款适用"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5}}},
+  {hs:"3002.15",desc:"其他免疫球蛋白及血清蛋白",cat:"免疫球蛋白/血清",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5}}},
+  {hs:"3002.51",desc:"含有固定单细胞酵母菌的培养物",cat:"生物制品/微生物",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5}}},
+  {hs:"3002",desc:"人体血液制品、免疫制品、疫苗、毒素、微生物培养物等",cat:"生物制品/疫苗",rates:{US:{mfn:0,note:"多数零关税，232条款另征"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5}}},
+  {hs:"3001",desc:"供治疗或预防疾病用的腺体及其他脏器器官的干制品",cat:"脏器制剂/器官提取物",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10}}},
+  {hs:"3003",desc:"由两种或两种以上成分混合而成的药品（未配定剂量或制成零售包装）",cat:"混合药品（未配定剂量）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:1},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10}}},
+  {hs:"3005",desc:"药物用软填料、纱布、绷带及类似物品",cat:"药用敷料",rates:{US:{mfn:2.5},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:3},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10}}},
+  {hs:"3006",desc:"药品用化学品及医药制剂（X光造影剂、献血用制剂、牙科填料等）",cat:"医药化学品/造影剂",rates:{US:{mfn:1.6},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10}}},
+  {hs:"2941",desc:"抗生素（纯品或未配定剂量），含青霉素、链霉素、四环素等",cat:"原料药/API（抗生素）",rates:{US:{mfn:0,note:"301条款对华另征12.5%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5}}},
+  {hs:"2937",desc:"激素、前列腺素、血栓素和白三烯（天然或合成）",cat:"原料药/API（激素类）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5}}},
+  {hs:"2933",desc:"含有杂环氮基化合物",cat:"原料药/API（杂环化合物）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5}}},
+  {hs:"2936",desc:"维生素原和维生素（含天然浓缩物及互配物）",cat:"原料药/API（维生素类）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5}}},
+  {hs:"2934",desc:"其他杂环化合物（含核酸及其盐）",cat:"原料药/API（核酸类）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5}}},
+  {hs:"29",desc:"有机化学品大类（含原料药API）",cat:"原料药/API（大类）",rates:{US:{mfn:0,note:"多数零关税，301对华另征12.5%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5}}},
+  {hs:"9018.90",desc:"其他医疗、外科仪器和器具（含诊断设备）",cat:"医疗器械",rates:{US:{mfn:0,note:"301强迫劳动关税另征"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:7.5}}},
+  {hs:"9018",desc:"医疗、外科、牙科或兽医用途的仪器和器具",cat:"医疗器械（诊断/手术）",rates:{US:{mfn:0,note:"301强迫劳动关税另征"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:7.5}}},
+  {hs:"9020",desc:"其他呼吸器具及防毒面具",cat:"医疗器械（呼吸/防护）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10}}},
+  {hs:"9019",desc:"机械疗法器具、按摩器具、心理功能测验装置等",cat:"医疗器械（康复/理疗）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:7.5}}},
+  {hs:"9021",desc:"骨科或骨折用具、夹板及其他人体支撑器具；人造人体部分",cat:"医疗器械（骨科/矫形）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:7.5}}},
+  {hs:"90",desc:"光学、照相、电影、计量、检验、医疗或外科用仪器及设备（大类）",cat:"医疗器械/精密仪器（大类）",rates:{US:{mfn:0,note:"多数零关税"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:7.5}}}
+];
+
+// Current search result (for save)
+let currentSearchResult = null;
+
+function normalizeHs(code) {
+  return code.replace(/[.\s\-]/g, '').trim().toLowerCase();
+}
+
+function searchHsCode() {
+  const input = document.getElementById('hsSearchInput').value.trim();
+  if (!input) { alert('请输入HS编码或关键词'); return; }
+
+  const results = [];
+  const normInput = normalizeHs(input);
+
+  // Search by HS code prefix match
+  TARIFF_DB.forEach(item => {
+    const normHs = normalizeHs(item.hs);
+    const isCodeMatch = normHs.startsWith(normInput) || normInput.startsWith(normHs) ||
+                         normHs.includes(normInput) || normInput.includes(normHs);
+    // Search by keyword in desc or cat
+    const isKeywordMatch = item.desc.includes(input) || item.cat.includes(input) ||
+                           item.hs.toLowerCase().includes(input.toLowerCase());
+
+    if (isCodeMatch || isKeywordMatch) {
+      results.push(item);
+    }
+  });
+
+  // Deduplicate by HS code (keep exact matches first)
+  const seen = new Set();
+  const uniqueResults = [];
+  results.forEach(r => {
+    if (!seen.has(r.hs)) { seen.add(r.hs); uniqueResults.push(r); }
+  });
+
+  if (uniqueResults.length === 0) {
+    document.getElementById('hsResultSection').style.display = 'block';
+    document.getElementById('hsResultTitle').textContent = '未找到匹配结果';
+    document.getElementById('hsResultContent').innerHTML =
+      '<p style="color:#667085;text-align:center;padding:30px;">未找到与 "' + input + '" 相关的HS编码或产品类别。<br>请尝试其他编码或关键词，如：3004、2941、9018、疫苗、原料药、医疗器械。</p>';
+    return;
+  }
+
+  currentSearchResult = {query: input, timestamp: new Date().toISOString(), results: uniqueResults};
+
+  document.getElementById('hsResultSection').style.display = 'block';
+  document.getElementById('hsResultTitle').textContent =
+    '查询结果：' + uniqueResults.length + ' 条匹配（' + input + '）';
+
+  let html = '';
+  uniqueResults.forEach(item => {
+    const rateColor = (rate) => rate === 0 ? '#28A745' : rate <= 5 ? '#F59E0B' : '#DC3545';
+    const rateBadge = (rate, note) => {
+      const bg = rate === 0 ? '#E8F5E9' : rate <= 5 ? '#FFF8E1' : '#FFEBEE';
+      const color = rate === 0 ? '#2E7D32' : rate <= 5 ? '#E65100' : '#C62828';
+      return '<span style="display:inline-block;background:' + bg + ';color:' + color +
+             ';padding:3px 10px;border-radius:4px;font-weight:600;font-size:13px;font-family:var(--font-mono);">' +
+             rate.toFixed(1) + '%</span>' + (note ? '<div style="font-size:11px;color:#667085;margin-top:2px;">' + note + '</div>' : '');
+    };
+
+    html += '<div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:20px;overflow:hidden;box-shadow:var(--shadow);">';
+    html += '<div style="background:linear-gradient(135deg,#102A43,#1E40AF);color:#fff;padding:14px 20px;">';
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">';
+    html += '<span style="font-family:var(--font-mono);font-size:18px;font-weight:700;">HS ' + item.hs + '</span>';
+    html += '<span style="background:rgba(255,255,255,0.2);padding:3px 10px;border-radius:12px;font-size:12px;">' + item.cat + '</span>';
+    html += '</div>';
+    html += '<div style="font-size:13px;opacity:0.9;margin-top:6px;">' + item.desc + '</div>';
+    html += '</div>';
+    html += '<div style="padding:16px 20px;">';
+    html += '<table style="width:100%;border-collapse:collapse;font-size:13px;">';
+    html += '<tr style="background:#F8F6F0;"><th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);width:60px;">国家</th><th style="padding:8px 10px;text-align:center;border-bottom:2px solid var(--border);width:80px;">MFN税率</th><th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);">备注</th></tr>';
+
+    Object.keys(item.rates).forEach(code => {
+      const country = COUNTRY_INFO[code];
+      const rateData = item.rates[code];
+      const mfn = rateData.mfn;
+      const note = rateData.note || '';
+      const bg = mfn === 0 ? 'background:#F0FFF4;' : mfn <= 5 ? '' : 'background:#FFF5F5;';
+      html += '<tr style="' + bg + '">';
+      html += '<td style="padding:8px 10px;border-bottom:1px solid #F0F0F0;font-weight:500;">' + country.flag + ' ' + country.name + '</td>';
+      html += '<td style="padding:8px 10px;border-bottom:1px solid #F0F0F0;text-align:center;">' + rateBadge(mfn) + '</td>';
+      html += '<td style="padding:8px 10px;border-bottom:1px solid #F0F0F0;color:#667085;font-size:12px;">' + (note || '-') + '</td>';
+      html += '</tr>';
+    });
+    html += '</table></div></div>';
+  });
+
+  document.getElementById('hsResultContent').innerHTML = html;
+  loadSavedRecords();
+}
+
+function quickSearch(term) {
+  document.getElementById('hsSearchInput').value = term;
+  searchHsCode();
+}
+
+// Enter key support
+document.getElementById('hsSearchInput').addEventListener('keyup', function(e) {
+  if (e.key === 'Enter') searchHsCode();
+});
+
+function saveQueryResult() {
+  if (!currentSearchResult) { alert('没有可保存的查询结果，请先进行查询'); return; }
+
+  let saved = JSON.parse(localStorage.getItem('hs_code_queries') || '[]');
+  const exists = saved.some(s => s.query === currentSearchResult.query &&
+    s.timestamp.substring(0, 10) === currentSearchResult.timestamp.substring(0, 10));
+  if (exists) { alert('今日该查询结果已保存'); return; }
+
+  saved.unshift(currentSearchResult);
+  if (saved.length > 50) saved = saved.slice(0, 50);
+  localStorage.setItem('hs_code_queries', JSON.stringify(saved));
+  alert('✅ 已保存到本地！（共 ' + saved.length + ' 条记录）');
+  loadSavedRecords();
+}
+
+function loadSavedRecords() {
+  const saved = JSON.parse(localStorage.getItem('hs_code_queries') || '[]');
+  const section = document.getElementById('hsSavedSection');
+  if (saved.length === 0) { section.style.display = 'none'; return; }
+
+  section.style.display = 'block';
+  let html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">';
+  saved.forEach((item, idx) => {
+    const date = item.timestamp ? item.timestamp.substring(0, 10) : '未知';
+    const count = item.results ? item.results.length : 0;
+    const hsList = (item.results || []).map(r => r.hs).slice(0, 3).join(', ');
+    html += '<div style="background:#F8F6F0;border:1px solid var(--border);border-radius:6px;padding:12px;font-size:13px;">';
+    html += '<div style="font-weight:600;color:#102A43;margin-bottom:4px;">🔍 ' + item.query + '</div>';
+    html += '<div style="color:#667085;font-size:12px;">' + date + ' · ' + count + ' 条结果</div>';
+    html += '<div style="color:#2978B5;font-size:12px;margin-top:4px;font-family:var(--font-mono);">' + hsList + '</div>';
+    html += '<button onclick="deleteSavedRecord(' + idx + ')" style="margin-top:8px;padding:3px 10px;background:transparent;border:1px solid #DC3545;color:#DC3545;border-radius:4px;font-size:11px;cursor:pointer;">删除</button>';
+    html += '</div>';
+  });
+  html += '</div>';
+  document.getElementById('hsSavedContent').innerHTML = html;
+}
+
+function deleteSavedRecord(idx) {
+  let saved = JSON.parse(localStorage.getItem('hs_code_queries') || '[]');
+  saved.splice(idx, 1);
+  localStorage.setItem('hs_code_queries', JSON.stringify(saved));
+  loadSavedRecords();
+  if (saved.length === 0) document.getElementById('hsSavedSection').style.display = 'none';
+}
+
+function clearSaved() {
+  if (!confirm('确定清空所有已保存的查询记录吗？')) return;
+  localStorage.removeItem('hs_code_queries');
+  document.getElementById('hsSavedSection').style.display = 'none';
+}
+
+function exportAllSaved() {
+  const saved = JSON.parse(localStorage.getItem('hs_code_queries') || '[]');
+  if (saved.length === 0) { alert('没有保存的记录'); return; }
+  const blob = new Blob([JSON.stringify(saved, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'hs_code_queries_' + new Date().toISOString().substring(0,10) + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// Load saved records on page load
+setTimeout(loadSavedRecords, 500);
 </script>
 </body>
 </html>
