@@ -1545,7 +1545,7 @@ const COUNTRY_INFO = {
   CN:{name:"中国",flag:"🇨🇳",vat:"13%/3%",vatType:"增值税",vatNote:"一般药品13%，抗癌药3%"},
   KR:{name:"韩国",flag:"🇰🇷",vat:"10%",vatType:"VAT",vatNote:"统一10%"},
   TH:{name:"泰国",flag:"🇹🇭",vat:"7%",vatType:"VAT",vatNote:"优惠税率至2026年底"},
-  BR:{name:"巴西",flag:"🇧🇷",vat:"0%",vatType:"ICMS",vatNote:"特定药品（如抗癌药、特效药等）免征州增值税(ICMS) 【核验2026-09-02】来源: https://legislacao.fazenda.sp.gov.br/Paginas/an1art092.aspx"},
+  BR:{name:"巴西",flag:"🇧🇷",vat:"17-20%",vatType:"ICMS",vatNote:"州税17-20%+PIS/COFINS"},
   IN:{name:"印度",flag:"🇮🇳",vat:"5-12%",vatType:"IGST",vatNote:"生命药5%，其他12%"},
   CH:{name:"瑞士",flag:"🇨🇭",vat:"8.1%/2.6%",vatType:"VAT",vatNote:"标准8.1%，药品优惠2.6%"},
   ID:{name:"印度尼西亚",flag:"🇮🇩",vat:"11%",vatType:"PPN(增值税)",vatNote:"标准12%，药品有效11%"},
@@ -1556,7 +1556,7 @@ const COUNTRY_INFO = {
 const TARIFF_DB = [
   {hs:"3004.90",desc:"混合或非混合产品构成的药品（治病或防病用），已配定剂量或制成零售包装",cat:"成品药（制剂）",rates:{US:{mfn:3.2,note:"232条款另征最高100%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2.5,note:"暂定2.5%，可降至0-2%"},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
   {hs:"3004.10",desc:"含有青霉素或青霉素烷酸结构的衍生物制剂",cat:"抗生素类制剂",rates:{US:{mfn:3.2,note:"232条款另征最高100%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
-  {hs:"3004",desc:"混合或非混合产品构成的药品（已配定剂量/零售包装）— 大类",cat:"成品药（制剂）",rates:{US:{mfn:3.2,note:"232条款另征最高100%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2.5},KR:{mfn:0},TH:{mfn:5},BR:{mfn:7.2,note:"TEC (Tarifa Externa Comum) rate for HS 3004 is 7.2% 【核验2026-09-02】来源: https://www.gov.br/mdic/pt-br/assuntos/camex/outros-document"},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"3004",desc:"混合或非混合产品构成的药品（已配定剂量/零售包装）— 大类",cat:"成品药（制剂）",rates:{US:{mfn:3.2,note:"232条款另征最高100%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2.5},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
   {hs:"3002.14",desc:"免疫制品：疫苗、毒素及类毒素",cat:"疫苗/免疫制品",rates:{US:{mfn:0,note:"232条款适用"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
   {hs:"3002.15",desc:"其他免疫球蛋白及血清蛋白",cat:"免疫球蛋白/血清",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
   {hs:"3002.51",desc:"含有固定单细胞酵母菌的培养物",cat:"生物制品/微生物",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
