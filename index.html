@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>全球药品进出口关税每日简报看板</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 :root {
   --bg: #F4F6FA;
   --bg-card: #FFFFFF;
@@ -39,7 +40,6 @@
   --gradient-card: linear-gradient(180deg, #FFFFFF 0%, #F9FAFB 100%);
   --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: var(--font-sans);
@@ -1361,23 +1361,55 @@ table.data-table .num {
   <!-- Footer -->
   <footer class="footer">
     <div>⚠️ 本看板数据仅供参考，具体通关请以各国海关当期公布税率为准。AI生成内容，不构成贸易决策建议。</div>
-    <div>关税顾问 · 国际部内部参考 · <span style="font-size:11px;opacity:0.7;">v3.4（回滚标签：v2.0-pre-vat）</span></div>
+    <div>关税顾问 · 国际部内部参考 · <span style="font-size:11px;opacity:0.7;">v3.5（回滚标签：v2.0-pre-vat）</span></div>
   </footer>
 
 </main>
 
 <script>
-// Tab navigation
-document.querySelectorAll('.nav-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.nav-tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    tab.classList.add('active');
-    tab.setAttribute('aria-selected','true');
-    const panel = document.getElementById('tab-' + tab.dataset.tab);
-    if (panel) panel.classList.add('active');
-  });
-});
+// Tab navigation - robust implementation
+(function() {
+  function switchTab(tabId) {
+    // Deactivate all tabs and panels
+    var allTabs = document.querySelectorAll('.nav-tab');
+    var allPanels = document.querySelectorAll('.tab-panel');
+    for (var i = 0; i < allTabs.length; i++) {
+      allTabs[i].classList.remove('active');
+      allTabs[i].setAttribute('aria-selected', 'false');
+    }
+    for (var j = 0; j < allPanels.length; j++) {
+      allPanels[j].classList.remove('active');
+      allPanels[j].style.display = 'none';
+    }
+    // Activate selected tab
+    var activeTab = document.querySelector('.nav-tab[data-tab="' + tabId + '"]');
+    var activePanel = document.getElementById('tab-' + tabId);
+    if (activeTab) {
+      activeTab.classList.add('active');
+      activeTab.setAttribute('aria-selected', 'true');
+    }
+    if (activePanel) {
+      activePanel.classList.add('active');
+      activePanel.style.display = 'block';
+    }
+  }
+
+  // Bind click events to all tab buttons
+  var tabs = document.querySelectorAll('.nav-tab');
+  for (var k = 0; k < tabs.length; k++) {
+    (function(tab) {
+      tab.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var targetTab = tab.getAttribute('data-tab');
+        if (targetTab) switchTab(targetTab);
+      });
+    })(tabs[k]);
+  }
+
+  // Initialize: show overview tab
+  switchTab('overview');
+})();
 
 // Update date
 const now = new Date();
