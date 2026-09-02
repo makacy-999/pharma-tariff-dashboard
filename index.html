@@ -859,7 +859,7 @@ table.data-table .num {
             <div class="y-line" style="bottom:0%"><span class="y-label">0%</span></div>
           </div>
           <!-- Bars -->
-          <div class="bar-group"><div class="bar-value">0%</div><div class="bar bar-green" style="height:2%"></div><div class="bar-label">美国①</div></div>
+          <div class="bar-group"><div class="bar-value">0%</div><div class="bar bar-green" style="height:2%"></div><div class="bar-label">美国</div></div>
           <div class="bar-group"><div class="bar-value">0%</div><div class="bar bar-green" style="height:2%"></div><div class="bar-label">欧盟</div></div>
           <div class="bar-group"><div class="bar-value">0%</div><div class="bar bar-green" style="height:2%"></div><div class="bar-label">日本</div></div>
           <div class="bar-group"><div class="bar-value">0%</div><div class="bar bar-green" style="height:2%"></div><div class="bar-label">英国</div></div>
@@ -867,7 +867,7 @@ table.data-table .num {
           <div class="bar-group"><div class="bar-value">0%</div><div class="bar bar-green" style="height:2%"></div><div class="bar-label">澳大利亚</div></div>
           <div class="bar-group"><div class="bar-value">0%</div><div class="bar bar-green" style="height:2%"></div><div class="bar-label">新加坡</div></div>
           <div class="bar-group"><div class="bar-value">0%</div><div class="bar bar-green" style="height:2%"></div><div class="bar-label">瑞士</div></div>
-          <div class="bar-group"><div class="bar-value">0%</div><div class="bar bar-green" style="height:2%"></div><div class="bar-label">中国②</div></div>
+          <div class="bar-group"><div class="bar-value">0%</div><div class="bar bar-green" style="height:2%"></div><div class="bar-label">中国</div></div>
           <div class="bar-group"><div class="bar-value">2.5%</div><div class="bar bar-orange" style="height:25%"></div><div class="bar-label">泰国</div></div>
           <div class="bar-group"><div class="bar-value">8%</div><div class="bar bar-red" style="height:80%"></div><div class="bar-label">韩国</div></div>
           <div class="bar-group"><div class="bar-value">8%</div><div class="bar bar-red" style="height:80%"></div><div class="bar-label">巴西</div></div>
@@ -878,8 +878,8 @@ table.data-table .num {
         </div>
       </div>
       <p style="font-size:11px;color:var(--text-secondary);margin-top:12px;">
-        ① 美国基础MFN税率0%，但叠加232条款（专利药最高100%）和301条款（部分国家10-12.5%）后实际有效税率大幅上升。<br>
-        ② 中国大部分成品药税目已降至0%，部分税目仍保留5%。
+        美国基础MFN税率0%，但叠加232条款（专利药最高100%）和301条款（部分国家10-12.5%）后实际有效税率大幅上升。<br>
+        中国大部分成品药税目已降至0%，部分税目仍保留5%。
       </p>
     </div>
 
@@ -938,7 +938,7 @@ table.data-table .num {
             <div class="y-line" style="bottom:25%"><span class="y-label">2.5%</span></div>
             <div class="y-line" style="bottom:0%"><span class="y-label">0%</span></div>
           </div>
-          <div class="bar-group"><div class="bar-value">0%</div><div class="bar bar-green" style="height:2%"></div><div class="bar-label">美国③</div></div>
+          <div class="bar-group"><div class="bar-value">0%</div><div class="bar bar-green" style="height:2%"></div><div class="bar-label">美国</div></div>
           <div class="bar-group"><div class="bar-value">0%</div><div class="bar bar-green" style="height:2%"></div><div class="bar-label">欧盟</div></div>
           <div class="bar-group"><div class="bar-value">0%</div><div class="bar bar-green" style="height:2%"></div><div class="bar-label">日本</div></div>
           <div class="bar-group"><div class="bar-value">0%</div><div class="bar bar-green" style="height:2%"></div><div class="bar-label">英国</div></div>
@@ -957,7 +957,7 @@ table.data-table .num {
         </div>
       </div>
       <p style="font-size:11px;color:var(--text-secondary);margin-top:12px;">
-        ③ 美国对医疗器械免征基础关税，但301强迫劳动关税对中国医疗仪器另征10-12.5%。印度对医疗器械征收7.5%关税，为各国中最高。<br>
+        美国对医疗器械免征基础关税，但301强迫劳动关税对中国医疗仪器另征10-12.5%。印度对医疗器械征收7.5%关税，为各国中最高。<br>
         注：本图展示HS90大类平均税率，具体子类（诊断设备、骨科器械等）税率可能有差异，详见"HS编码查询"模块。
       </p>
     </div>
@@ -1361,7 +1361,7 @@ table.data-table .num {
   <!-- Footer -->
   <footer class="footer">
     <div>⚠️ 本看板数据仅供参考，具体通关请以各国海关当期公布税率为准。AI生成内容，不构成贸易决策建议。</div>
-    <div>关税顾问 · 国际部内部参考 · <span style="font-size:11px;opacity:0.7;">v3.3（回滚标签：v2.0-pre-vat）</span></div>
+    <div>关税顾问 · 国际部内部参考 · <span style="font-size:11px;opacity:0.7;">v3.4（回滚标签：v2.0-pre-vat）</span></div>
   </footer>
 
 </main>
@@ -1405,29 +1405,29 @@ const COUNTRY_INFO = {
 };
 
 const TARIFF_DB = [
-  {hs:"3004.90",desc:"混合或非混合产品构成的药品（治病或防病用），已配定剂量或制成零售包装",cat:"成品药（制剂）",rates:{US:{mfn:3.2,note:"232条款另征最高100%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2.5,note:"暂定2.5%，可降至0-2%"},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"3004.10",desc:"含有青霉素或青霉素烷酸结构的衍生物制剂",cat:"抗生素类制剂",rates:{US:{mfn:3.2,note:"232条款另征最高100%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"3004",desc:"混合或非混合产品构成的药品（已配定剂量/零售包装）— 大类",cat:"成品药（制剂）",rates:{US:{mfn:3.2,note:"232条款另征最高100%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2.5},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"3002.14",desc:"免疫制品：疫苗、毒素及类毒素",cat:"疫苗/免疫制品",rates:{US:{mfn:0,note:"232条款适用"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"3002.15",desc:"其他免疫球蛋白及血清蛋白",cat:"免疫球蛋白/血清",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"3002.51",desc:"含有固定单细胞酵母菌的培养物",cat:"生物制品/微生物",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"3002",desc:"人体血液制品、免疫制品、疫苗、毒素、微生物培养物等",cat:"生物制品/疫苗",rates:{US:{mfn:0,note:"多数零关税，232条款另征"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"3001",desc:"供治疗或预防疾病用的腺体及其他脏器器官的干制品",cat:"脏器制剂/器官提取物",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"3003",desc:"由两种或两种以上成分混合而成的药品（未配定剂量或制成零售包装）",cat:"混合药品（未配定剂量）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:1},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"3005",desc:"药物用软填料、纱布、绷带及类似物品",cat:"药用敷料",rates:{US:{mfn:2.5},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:3},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"3006",desc:"药品用化学品及医药制剂（X光造影剂、献血用制剂、牙科填料等）",cat:"医药化学品/造影剂",rates:{US:{mfn:1.6},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"2941",desc:"抗生素（纯品或未配定剂量），含青霉素、链霉素、四环素等",cat:"原料药/API（抗生素）",rates:{US:{mfn:0,note:"301条款对华另征12.5%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"2937",desc:"激素、前列腺素、血栓素和白三烯（天然或合成）",cat:"原料药/API（激素类）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"2933",desc:"含有杂环氮基化合物",cat:"原料药/API（杂环化合物）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"2936",desc:"维生素原和维生素（含天然浓缩物及互配物）",cat:"原料药/API（维生素类）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"2934",desc:"其他杂环化合物（含核酸及其盐）",cat:"原料药/API（核酸类）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"29",desc:"有机化学品大类（含原料药API）",cat:"原料药/API（大类）",rates:{US:{mfn:0,note:"多数零关税，301对华另征12.5%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}}},
-  {hs:"9018.90",desc:"其他医疗、外科仪器和器具（含诊断设备）",cat:"医疗器械",rates:{US:{mfn:0,note:"301强迫劳动关税另征"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:7.5},CH:{mfn:0},ID:{mfn:5,note:"5-15%"},RU:{mfn:10,note:"EAEU 10%"},MY:{mfn:0}}}},
-  {hs:"9018",desc:"医疗、外科、牙科或兽医用途的仪器和器具",cat:"医疗器械（诊断/手术）",rates:{US:{mfn:0,note:"301强迫劳动关税另征"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:7.5},CH:{mfn:0},ID:{mfn:5,note:"5-15%"},RU:{mfn:10,note:"EAEU 10%"},MY:{mfn:0}}}},
-  {hs:"9020",desc:"其他呼吸器具及防毒面具",cat:"医疗器械（呼吸/防护）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-15%"},RU:{mfn:10,note:"EAEU 10%"},MY:{mfn:0}}}},
-  {hs:"9019",desc:"机械疗法器具、按摩器具、心理功能测验装置等",cat:"医疗器械（康复/理疗）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:7.5},CH:{mfn:0},ID:{mfn:5,note:"5-15%"},RU:{mfn:10,note:"EAEU 10%"},MY:{mfn:0}}}},
-  {hs:"9021",desc:"骨科或骨折用具、夹板及其他人体支撑器具；人造人体部分",cat:"医疗器械（骨科/矫形）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:7.5},CH:{mfn:0},ID:{mfn:5,note:"5-15%"},RU:{mfn:10,note:"EAEU 10%"},MY:{mfn:0}}}},
-  {hs:"90",desc:"光学、照相、电影、计量、检验、医疗或外科用仪器及设备（大类）",cat:"医疗器械/精密仪器（大类）",rates:{US:{mfn:0,note:"多数零关税"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:7.5},CH:{mfn:0},ID:{mfn:5,note:"5-15%"},RU:{mfn:10,note:"EAEU 10%"},MY:{mfn:0}}}}
+  {hs:"3004.90",desc:"混合或非混合产品构成的药品（治病或防病用），已配定剂量或制成零售包装",cat:"成品药（制剂）",rates:{US:{mfn:3.2,note:"232条款另征最高100%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2.5,note:"暂定2.5%，可降至0-2%"},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"3004.10",desc:"含有青霉素或青霉素烷酸结构的衍生物制剂",cat:"抗生素类制剂",rates:{US:{mfn:3.2,note:"232条款另征最高100%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"3004",desc:"混合或非混合产品构成的药品（已配定剂量/零售包装）— 大类",cat:"成品药（制剂）",rates:{US:{mfn:3.2,note:"232条款另征最高100%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2.5},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"3002.14",desc:"免疫制品：疫苗、毒素及类毒素",cat:"疫苗/免疫制品",rates:{US:{mfn:0,note:"232条款适用"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"3002.15",desc:"其他免疫球蛋白及血清蛋白",cat:"免疫球蛋白/血清",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"3002.51",desc:"含有固定单细胞酵母菌的培养物",cat:"生物制品/微生物",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"3002",desc:"人体血液制品、免疫制品、疫苗、毒素、微生物培养物等",cat:"生物制品/疫苗",rates:{US:{mfn:0,note:"多数零关税，232条款另征"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"3001",desc:"供治疗或预防疾病用的腺体及其他脏器器官的干制品",cat:"脏器制剂/器官提取物",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"3003",desc:"由两种或两种以上成分混合而成的药品（未配定剂量或制成零售包装）",cat:"混合药品（未配定剂量）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:1},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"3005",desc:"药物用软填料、纱布、绷带及类似物品",cat:"药用敷料",rates:{US:{mfn:2.5},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:3},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"3006",desc:"药品用化学品及医药制剂（X光造影剂、献血用制剂、牙科填料等）",cat:"医药化学品/造影剂",rates:{US:{mfn:1.6},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-10%"},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"2941",desc:"抗生素（纯品或未配定剂量），含青霉素、链霉素、四环素等",cat:"原料药/API（抗生素）",rates:{US:{mfn:0,note:"301条款对华另征12.5%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"2937",desc:"激素、前列腺素、血栓素和白三烯（天然或合成）",cat:"原料药/API（激素类）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"2933",desc:"含有杂环氮基化合物",cat:"原料药/API（杂环化合物）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"2936",desc:"维生素原和维生素（含天然浓缩物及互配物）",cat:"原料药/API（维生素类）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"2934",desc:"其他杂环化合物（含核酸及其盐）",cat:"原料药/API（核酸类）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"29",desc:"有机化学品大类（含原料药API）",cat:"原料药/API（大类）",rates:{US:{mfn:0,note:"多数零关税，301对华另征12.5%"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:0},KR:{mfn:0},TH:{mfn:0},BR:{mfn:0},IN:{mfn:5},CH:{mfn:0},ID:{mfn:0},RU:{mfn:5,note:"EAEU 5%"},MY:{mfn:0}}},
+  {hs:"9018.90",desc:"其他医疗、外科仪器和器具（含诊断设备）",cat:"医疗器械",rates:{US:{mfn:0,note:"301强迫劳动关税另征"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:7.5},CH:{mfn:0},ID:{mfn:5,note:"5-15%"},RU:{mfn:10,note:"EAEU 10%"},MY:{mfn:0}}},
+  {hs:"9018",desc:"医疗、外科、牙科或兽医用途的仪器和器具",cat:"医疗器械（诊断/手术）",rates:{US:{mfn:0,note:"301强迫劳动关税另征"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:7.5},CH:{mfn:0},ID:{mfn:5,note:"5-15%"},RU:{mfn:10,note:"EAEU 10%"},MY:{mfn:0}}},
+  {hs:"9020",desc:"其他呼吸器具及防毒面具",cat:"医疗器械（呼吸/防护）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:10},CH:{mfn:0},ID:{mfn:5,note:"5-15%"},RU:{mfn:10,note:"EAEU 10%"},MY:{mfn:0}}},
+  {hs:"9019",desc:"机械疗法器具、按摩器具、心理功能测验装置等",cat:"医疗器械（康复/理疗）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:7.5},CH:{mfn:0},ID:{mfn:5,note:"5-15%"},RU:{mfn:10,note:"EAEU 10%"},MY:{mfn:0}}},
+  {hs:"9021",desc:"骨科或骨折用具、夹板及其他人体支撑器具；人造人体部分",cat:"医疗器械（骨科/矫形）",rates:{US:{mfn:0},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:7.5},CH:{mfn:0},ID:{mfn:5,note:"5-15%"},RU:{mfn:10,note:"EAEU 10%"},MY:{mfn:0}}},
+  {hs:"90",desc:"光学、照相、电影、计量、检验、医疗或外科用仪器及设备（大类）",cat:"医疗器械/精密仪器（大类）",rates:{US:{mfn:0,note:"多数零关税"},EU:{mfn:0},JP:{mfn:0},GB:{mfn:0},CA:{mfn:0},AU:{mfn:0},SG:{mfn:0},CN:{mfn:2},KR:{mfn:0},TH:{mfn:5},BR:{mfn:0},IN:{mfn:7.5},CH:{mfn:0},ID:{mfn:5,note:"5-15%"},RU:{mfn:10,note:"EAEU 10%"},MY:{mfn:0}}}
 ];
 
 // Current search result (for save)
