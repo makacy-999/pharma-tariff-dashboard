@@ -1,5 +1,28 @@
 <!doctype html>
 <html lang="zh-CN">
+<!--
+================================================================================
+  药品关税每日简报看板 (Pharma Tariff Dashboard)
+  Version: v3.7
+  
+  Copyright (c) 2026 郭立静 (Guo Lijing). All rights reserved.
+  版权所有 (c) 2026 郭立静. 保留所有权利.
+  
+  本看板及其所有数据、设计、代码均为郭立静所有，受国际版权法和知识产权条约保护。
+  未经书面许可，禁止任何形式的复制、传播、转载、修改或商业使用。
+  
+  This dashboard and all its data, design, and code are the property of Guo Lijing,
+  protected by international copyright laws and intellectual property treaties.
+  Unauthorized copying, distribution, transmission, modification, or commercial
+  use is strictly prohibited without prior written consent.
+  
+  Contact: guolijing@huaren-scm.com
+  GitHub: https://github.com/makacy-999/pharma-tariff-dashboard
+  
+  如发现侵权行为，保留追究法律责任的权利。
+================================================================================
+-->
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -772,10 +795,22 @@ table.data-table .num {
   .kpi-card .kpi-value { font-size: 22px; }
   .kpi-card .kpi-label { font-size: 11px; }
 }
+
+  /* Hidden watermark for copyright protection - DO NOT REMOVE */
+  .watermark-9f3a2b { display: none !important; content: "Copyright 郭立静 2026 - All Rights Reserved - guolijing@huaren-scm.com"; }
+  [data-owner="9f3a2b"]::after { content: "本看板版权归郭立静所有，未经授权禁止使用"; display: none; }
 </style>
+  <!-- Copyright & Author Information -->
+  <meta name="author" content="郭立静 (Guo Lijing)">
+  <meta name="copyright" content="Copyright (c) 2026 郭立静. All rights reserved.">
+  <meta name="description" content="药品关税每日简报看板 - 版权所有，未经授权禁止转载">
+  <meta name="robots" content="noindex, nofollow">
 </head>
 <body>
 <main class="dashboard">
+  <!-- Hidden copyright protection marker - DO NOT REMOVE -->
+  <div style="display:none !important;position:absolute;left:-9999px;font-size:0;line-height:0;" aria-hidden="true" data-copyright="guolijing-2026" data-owner="郭立静">Copyright © 2026 郭立静. All rights reserved. 本看板版权归郭立静所有。</div>
+
 
   <!-- Header -->
   <header class="header">
@@ -1412,12 +1447,43 @@ table.data-table .num {
   <!-- Footer -->
   <footer class="footer">
     <div>⚠️ 本看板数据仅供参考，具体通关请以各国海关当期公布税率为准。AI生成内容，不构成贸易决策建议。</div>
-    <div>关税顾问 · 国际部内部参考 · <span style="font-size:11px;opacity:0.7;">v3.7（回滚标签：v2.0-pre-vat）</span></div>
+    <div>关税顾问 · 国际部内部参考 · <span style="font-size:11px;opacity:0.7;">v3.8（回滚标签：v2.0-pre-vat）</span></div>
   </footer>
 
 </main>
 
 <script>
+
+  // ============================================================================
+  // Copyright Protection - DO NOT REMOVE
+  // Copyright (c) 2026 郭立静 (Guo Lijing). All rights reserved.
+  // 版权所有 (c) 2026 郭立静. 保留所有权利.
+  // ============================================================================
+  (function() {
+    'use strict';
+    
+    // Embed copyright in JS variable
+    var _copyright = {
+      owner: '郭立静 (Guo Lijing)',
+      year: 2026,
+      email: 'guolijing@huaren-scm.com',
+      rights: 'All rights reserved',
+      notice: '本看板及其所有内容均为郭立静所有，受法律保护，未经授权禁止使用'
+    };
+    
+    // Anti-theft: check if page is embedded in iframe
+    if (window.self !== window.top) {
+      console.warn('本看板版权归郭立静所有，禁止嵌入iframe使用');
+    }
+    
+    // Log copyright on console
+    console.log('%c' + _copyright.notice, 'color: #2563EB; font-weight: bold; font-size: 14px;');
+    console.log('%cCopyright © ' + _copyright.year + ' ' + _copyright.owner, 'color: #666; font-size: 12px;');
+    
+    // Store in global for verification
+    window.__dashboardOwner = _copyright;
+  })();
+
 // Tab navigation - robust implementation
 (function() {
   function switchTab(tabId) {
