@@ -568,11 +568,12 @@ table.data-table .num {
   <!-- Tab: Overview -->
   <div class="tab-panel active" id="tab-overview">
     <div class="section">
-      <h2 class="section-title">各国药品进口MFN关税对比（HS3004成品药）</h2>
+      <h2 class="section-title">各国药品进口关税与增值税/消费税对比（HS3004成品药）</h2>
       <div class="chart-legend">
         <div class="legend-item"><span class="legend-dot" style="background:#43A047"></span>零关税（0%）</div>
         <div class="legend-item"><span class="legend-dot" style="background:#FB8C00"></span>低关税（1-5%）</div>
         <div class="legend-item"><span class="legend-dot" style="background:#EF5350"></span>中等关税（6-15%）</div>
+        <div class="legend-item" style="margin-left:16px;border-left:2px solid #E6E1D8;padding-left:12px;"><span style="font-size:12px;color:#667085;">💡 下方附各国增值税/消费税（VAT/GST）对比</span></div>
       </div>
       <div class="chart-container">
         <div class="bar-chart" id="barChart">
@@ -603,6 +604,41 @@ table.data-table .num {
       <p style="font-size:11px;color:var(--text-secondary);margin-top:12px;">
         ① 美国基础MFN税率0%，但叠加232条款（专利药最高100%）和301条款（部分国家10-12.5%）后实际有效税率大幅上升。<br>
         ② 中国大部分成品药税目已降至0%，部分税目仍保留5%。
+      </p>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">各国增值税/消费税税率对比</h2>
+      <p style="font-size:13px;color:#667085;margin-bottom:16px;">增值税/消费税是进口药品在通关环节额外征收的国内税，直接影响最终进口成本。不同国家对药品可能适用标准税率或优惠税率。</p>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead>
+            <tr style="background:linear-gradient(135deg,#102A43,#1E40AF);color:#fff;">
+              <th style="padding:10px 12px;text-align:left;width:130px;">国家/地区</th>
+              <th style="padding:10px 12px;text-align:center;width:60px;">类型</th>
+              <th style="padding:10px 12px;text-align:center;width:90px;">标准税率</th>
+              <th style="padding:10px 12px;text-align:left;">药品适用说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:#F0FFF4;"><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇺🇸 美国</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">销售税</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">各州0-10%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">无联邦增值税；各州销售税0-10%不等，部分州对处方药豁免</td></tr>
+            <tr><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇪🇺 欧盟</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">VAT</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">19-27%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">德国19%、法国20%、意大利22%；多数成员国对药品适用5-10%优惠税率</td></tr>
+            <tr style="background:#F8F9FA;"><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇯🇵 日本</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">消费税</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">10%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">统一10%；部分生活必需品适用8%轻减税率</td></tr>
+            <tr><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇬🇧 英国</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">VAT</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">20%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">处方药（NHS报销）免税；OTC药品适用5%优惠税率</td></tr>
+            <tr style="background:#F0FFF4;"><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇨🇭 瑞士</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">VAT</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">8.1%→2.6%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#2E7D32;font-weight:500;">药品适用优惠税率2.6%（标准税率8.1%）</td></tr>
+            <tr><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇨🇦 加拿大</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">GST/HST</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">5-15%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">联邦GST 5%；部分省合并为HST 13-15%；处方药多省豁免</td></tr>
+            <tr style="background:#F8F9FA;"><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇦🇺 澳大利亚</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">GST</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">10%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">统一GST 10%；部分PBS补贴药品免税</td></tr>
+            <tr><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇸🇬 新加坡</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">GST</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">9%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">2024年起从8%上调至9%；药品统一适用9%</td></tr>
+            <tr style="background:#FFF5F5;"><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇨🇳 中国</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">增值税</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">13%/3%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#C62828;font-weight:500;">一般药品13%；抗癌药品及原料药适用3%简易征收</td></tr>
+            <tr><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇰🇷 韩国</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">VAT</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">10%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">统一10%；医疗服务免税，药品适用10%</td></tr>
+            <tr style="background:#F8F9FA;"><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇹🇭 泰国</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">VAT</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">7%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">优惠税率7%（标准10%），延长至2026年底；基本药品豁免</td></tr>
+            <tr><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇧🇷 巴西</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">ICMS</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">17-20%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#C62828;font-weight:500;">州级ICMS 17-20%+联邦PIS/COFINS约9.25%；综合税负极高</td></tr>
+            <tr style="background:#F8F9FA;"><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;font-weight:600;">🇮🇳 印度</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;">IGST</td><td style="padding:8px 12px;text-align:center;border-bottom:1px solid #E8E8E8;font-family:var(--font-mono);font-weight:600;">5/12%</td><td style="padding:8px 12px;border-bottom:1px solid #E8E8E8;color:#667085;">生命 Essential 药品5%；其他药品12%；另征SWS附加税</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:11px;color:var(--text-secondary);margin-top:8px;">
+        💡 <strong>实际进口成本 = 商品价格 + MFN关税 + 增值税/消费税 + 其他附加税</strong>。巴西综合税负最高（ICMS+PIS/COFINS+IPI可超60%）；印度综合税负16-24%（含SWS+IGST）；瑞士、澳大利亚、新加坡增值税相对温和。
       </p>
     </div>
   </div>
@@ -761,11 +797,11 @@ table.data-table .num {
           <div class="region-header bg-americas">🌎 美洲地区</div>
           <div class="region-body">
             <ul>
-              <li><span class="country-name">美国</span><span class="rate-badge rate-zero">MFN 0%</span></li>
+              <li><span class="country-name">美国</span><span class="rate-badge rate-zero">MFN 0%</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">销售税0-10%</span></li>
               <li><span class="country-name" style="font-size:11px;color:var(--text-secondary)"> ↳ 232专利药</span><span class="rate-badge rate-high">最高100%</span></li>
               <li><span class="country-name" style="font-size:11px;color:var(--text-secondary)"> ↳ 301强迫劳动</span><span class="rate-badge rate-mid">10-12.5%</span></li>
-              <li><span class="country-name">加拿大</span><span class="rate-badge rate-zero">0%</span></li>
-              <li><span class="country-name">巴西</span><span class="rate-badge rate-mid">8%（综合>60%）</span></li>
+              <li><span class="country-name">加拿大</span><span class="rate-badge rate-zero">0%</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">GST/HST 5-15%</span></li>
+              <li><span class="country-name">巴西</span><span class="rate-badge rate-mid">8%（综合>60%）</span> <span style="font-size:10px;color:#C62828;background:#FFEBEE;padding:1px 5px;border-radius:3px;">ICMS 17-20%</span></li>
               <li><span class="country-name" style="font-size:11px;color:var(--text-secondary)"> ↳ MERCOSUR内部</span><span class="rate-badge rate-zero">0%</span></li>
             </ul>
           </div>
@@ -775,10 +811,10 @@ table.data-table .num {
           <div class="region-header bg-europe">🌍 欧洲地区</div>
           <div class="region-body">
             <ul>
-              <li><span class="country-name">欧盟27国</span><span class="rate-badge rate-zero">全部0%</span></li>
-              <li><span class="country-name">英国</span><span class="rate-badge rate-zero">0%</span></li>
-              <li><span class="country-name">瑞士</span><span class="rate-badge rate-zero">0%（协议成员）</span></li>
-              <li><span class="country-name">挪威</span><span class="rate-badge rate-zero">0%（协议成员）</span></li>
+              <li><span class="country-name">欧盟27国</span><span class="rate-badge rate-zero">全部0%</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">VAT 19-27%</span></li>
+              <li><span class="country-name">英国</span><span class="rate-badge rate-zero">0%</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">VAT 20%</span></li>
+              <li><span class="country-name">瑞士</span><span class="rate-badge rate-zero">0%（协议成员）</span> <span style="font-size:10px;color:#2E7D32;background:#E8F5E9;padding:1px 5px;border-radius:3px;">VAT 2.6%优惠</span></li>
+              <li><span class="country-name">挪威</span><span class="rate-badge rate-zero">0%（协议成员）</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">VAT 25%</span></li>
               <li><span class="country-name" style="font-size:11px;color:var(--text-secondary)"> ↳ 美欧15%封顶</span><span class="rate-badge rate-mid">9月起恢复0%</span></li>
             </ul>
           </div>
@@ -802,11 +838,11 @@ table.data-table .num {
           <div class="region-header bg-asean">🌐 东盟地区</div>
           <div class="region-body">
             <ul>
-              <li><span class="country-name">新加坡</span><span class="rate-badge rate-zero">0%</span></li>
+              <li><span class="country-name">新加坡</span><span class="rate-badge rate-zero">0%</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">GST 9%</span></li>
               <li><span class="country-name">马来西亚/文莱</span><span class="rate-badge rate-zero">全部0%</span></li>
-              <li><span class="country-name">印度尼西亚</span><span class="rate-badge rate-zero">ATIGA内0%</span></li>
-              <li><span class="country-name">泰国</span><span class="rate-badge rate-mid">基础2.5-10%</span></li>
-              <li><span class="country-name">越南</span><span class="rate-badge rate-mid">基础0-15%</span></li>
+              <li><span class="country-name">印度尼西亚</span><span class="rate-badge rate-zero">ATIGA内0%</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">VAT 11%</span></li>
+              <li><span class="country-name">泰国</span><span class="rate-badge rate-mid">基础2.5-10%</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">VAT 7%</span></li>
+              <li><span class="country-name">越南</span><span class="rate-badge rate-mid">基础0-15%</span> <span style="font-size:10px;color:#1565C0;background:#E3F2FD;padding:1px 5px;border-radius:3px;">VAT 10%</span></li>
               <li><span class="country-name" style="font-size:11px;color:var(--text-secondary)"> ↳ ATIGA域内</span><span class="rate-badge rate-zero">基本零关税</span></li>
             </ul>
           </div>
@@ -939,7 +975,7 @@ table.data-table .num {
   <!-- Footer -->
   <footer class="footer">
     <div>⚠️ 本看板数据仅供参考，具体通关请以各国海关当期公布税率为准。AI生成内容，不构成贸易决策建议。</div>
-    <div>关税顾问 · 国际部内部参考</div>
+    <div>关税顾问 · 国际部内部参考 · <span style="font-size:11px;opacity:0.7;">v3.0-VAT（回滚标签：v2.0-pre-vat）</span></div>
   </footer>
 
 </main>
@@ -964,10 +1000,19 @@ document.getElementById('updateDate').textContent = dateStr + ' 更新';
 
 // ===== HS Code Query System =====
 const COUNTRY_INFO = {
-  US:{name:"美国",flag:"🇺🇸"},EU:{name:"欧盟",flag:"🇪🇺"},JP:{name:"日本",flag:"🇯🇵"},
-  GB:{name:"英国",flag:"🇬🇧"},CA:{name:"加拿大",flag:"🇨🇦"},AU:{name:"澳大利亚",flag:"🇦🇺"},
-  SG:{name:"新加坡",flag:"🇸🇬"},CN:{name:"中国",flag:"🇨🇳"},KR:{name:"韩国",flag:"🇰🇷"},
-  TH:{name:"泰国",flag:"🇹🇭"},BR:{name:"巴西",flag:"🇧🇷"},IN:{name:"印度",flag:"🇮🇳"},CH:{name:"瑞士",flag:"🇨🇭"}
+  US:{name:"美国",flag:"🇺🇸",vat:"各州0-10%",vatType:"销售税",vatNote:"无联邦增值税，州销售税0-10%"},
+  EU:{name:"欧盟",flag:"🇪🇺",vat:"19-27%",vatType:"VAT",vatNote:"德国19%/法国20%，药品优惠5-10%"},
+  JP:{name:"日本",flag:"🇯🇵",vat:"10%",vatType:"消费税",vatNote:"轻减制度食品8%"},
+  GB:{name:"英国",flag:"🇬🇧",vat:"20%",vatType:"VAT",vatNote:"处方药免税，OTC药品5%"},
+  CA:{name:"加拿大",flag:"🇨🇦",vat:"5-15%",vatType:"GST/HST",vatNote:"联邦GST 5%+省税0-10%"},
+  AU:{name:"澳大利亚",flag:"🇦🇺",vat:"10%",vatType:"GST",vatNote:"统一10%，部分药品免税"},
+  SG:{name:"新加坡",flag:"🇸🇬",vat:"9%",vatType:"GST",vatNote:"2024年起上调至9%"},
+  CN:{name:"中国",flag:"🇨🇳",vat:"13%/3%",vatType:"增值税",vatNote:"一般药品13%，抗癌药3%"},
+  KR:{name:"韩国",flag:"🇰🇷",vat:"10%",vatType:"VAT",vatNote:"统一10%"},
+  TH:{name:"泰国",flag:"🇹🇭",vat:"7%",vatType:"VAT",vatNote:"优惠税率至2026年底"},
+  BR:{name:"巴西",flag:"🇧🇷",vat:"17-20%",vatType:"ICMS",vatNote:"州税17-20%+PIS/COFINS"},
+  IN:{name:"印度",flag:"🇮🇳",vat:"5-12%",vatType:"IGST",vatNote:"生命药5%，其他12%"},
+  CH:{name:"瑞士",flag:"🇨🇭",vat:"8.1%/2.6%",vatType:"VAT",vatNote:"标准8.1%，药品优惠2.6%"}
 };
 
 const TARIFF_DB = [
@@ -1066,17 +1111,20 @@ function searchHsCode() {
     html += '</div>';
     html += '<div style="padding:16px 20px;">';
     html += '<table style="width:100%;border-collapse:collapse;font-size:13px;">';
-    html += '<tr style="background:#F8F6F0;"><th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);width:60px;">国家</th><th style="padding:8px 10px;text-align:center;border-bottom:2px solid var(--border);width:80px;">MFN税率</th><th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);">备注</th></tr>';
+    html += '<tr style="background:#F8F6F0;"><th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);width:60px;">国家</th><th style="padding:8px 10px;text-align:center;border-bottom:2px solid var(--border);width:80px;">MFN税率</th><th style="padding:8px 10px;text-align:center;border-bottom:2px solid var(--border);width:100px;">增值税/消费税</th><th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);">备注</th></tr>';
 
     Object.keys(item.rates).forEach(code => {
       const country = COUNTRY_INFO[code];
       const rateData = item.rates[code];
       const mfn = rateData.mfn;
       const note = rateData.note || '';
+      const vat = country.vat || '-';
+      const vatType = country.vatType || '';
       const bg = mfn === 0 ? 'background:#F0FFF4;' : mfn <= 5 ? '' : 'background:#FFF5F5;';
       html += '<tr style="' + bg + '">';
       html += '<td style="padding:8px 10px;border-bottom:1px solid #F0F0F0;font-weight:500;">' + country.flag + ' ' + country.name + '</td>';
       html += '<td style="padding:8px 10px;border-bottom:1px solid #F0F0F0;text-align:center;">' + rateBadge(mfn) + '</td>';
+      html += '<td style="padding:8px 10px;border-bottom:1px solid #F0F0F0;text-align:center;"><span style="display:inline-block;background:#E3F2FD;color:#1565C0;padding:3px 8px;border-radius:4px;font-weight:600;font-size:12px;font-family:var(--font-mono);white-space:nowrap;">' + vat + '</span><div style="font-size:10px;color:#999;margin-top:1px;">' + vatType + '</div></td>';
       html += '<td style="padding:8px 10px;border-bottom:1px solid #F0F0F0;color:#667085;font-size:12px;">' + (note || '-') + '</td>';
       html += '</tr>';
     });
@@ -1171,9 +1219,9 @@ function buildExcelHeader(title, subtitle) {
   h += '</x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>';
   h += '<table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;font-family:Microsoft YaHei,Arial,sans-serif;font-size:12px;">';
   // Title
-  h += '<tr><td colspan="5" style="background:#102A43;color:#FFFFFF;font-size:16px;font-weight:bold;padding:12px;text-align:center;">' + title + '</td></tr>';
-  h += '<tr><td colspan="5" style="background:#E8EAED;color:#333333;font-size:10px;padding:6px;text-align:center;">' + subtitle + '</td></tr>';
-  h += '<tr><td colspan="5" style="height:6px;border:none;"></td></tr>';
+  h += '<tr><td colspan="6" style="background:#102A43;color:#FFFFFF;font-size:16px;font-weight:bold;padding:12px;text-align:center;">' + title + '</td></tr>';
+  h += '<tr><td colspan="6" style="background:#E8EAED;color:#333333;font-size:10px;padding:6px;text-align:center;">' + subtitle + '</td></tr>';
+  h += '<tr><td colspan="6" style="height:6px;border:none;"></td></tr>';
   return h;
 }
 
@@ -1212,7 +1260,7 @@ function exportCurrentExcel() {
 
   data.results.forEach(function(item, idx) {
     if (idx > 0) {
-      html += '<tr><td colspan="5" style="height:10px;border:none;"></td></tr>';
+      html += '<tr><td colspan="6" style="height:10px;border:none;"></td></tr>';
     }
     // HS code group header
     html += '<tr>';
@@ -1224,6 +1272,7 @@ function exportCurrentExcel() {
     html += '<th style="padding:8px 10px;width:120px;text-align:left;border:1px solid #CCCCCC;">国家/地区</th>';
     html += '<th style="padding:8px 10px;width:80px;text-align:center;border:1px solid #CCCCCC;">国家代码</th>';
     html += '<th style="padding:8px 10px;width:100px;text-align:center;border:1px solid #CCCCCC;">MFN关税税率</th>';
+    html += '<th style="padding:8px 10px;width:110px;text-align:center;border:1px solid #CCCCCC;background:#E3F2FD;">增值税/消费税</th>';
     html += '<th style="padding:8px 10px;width:200px;text-align:left;border:1px solid #CCCCCC;">备注/说明</th>';
     html += '<th style="padding:8px 10px;width:100px;text-align:center;border:1px solid #CCCCCC;">关税水平</th>';
     html += '</tr>';
@@ -1241,6 +1290,7 @@ function exportCurrentExcel() {
       html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;">' + country.flag + ' ' + country.name + '</td>';
       html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;text-align:center;font-family:Consolas,monospace;">' + code + '</td>';
       html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;text-align:center;' + excelRateStyle(mfn) + '">' + mfn.toFixed(1) + '%</td>';
+      html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;text-align:center;background:#F0F7FF;font-weight:bold;color:#1565C0;font-size:11px;">' + (country.vat || '-') + ' (' + (country.vatType || '') + ')</td>';
       html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;font-size:11px;">' + note + '</td>';
       html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;text-align:center;font-size:11px;">' + level + '</td>';
       html += '</tr>';
@@ -1248,8 +1298,8 @@ function exportCurrentExcel() {
   });
 
   // Footer
-  html += '<tr><td colspan="5" style="height:8px;border:none;"></td></tr>';
-  html += '<tr><td colspan="5" style="background:#F8F9FA;font-size:10px;color:#667085;padding:8px;text-align:center;">';
+  html += '<tr><td colspan="6" style="height:8px;border:none;"></td></tr>';
+  html += '<tr><td colspan="6" style="background:#F8F9FA;font-size:10px;color:#667085;padding:8px;text-align:center;">';
   html += '本报告由药品关税看板系统自动生成 · 数据仅供参考，以各国海关官方公告为准 · 华仁供应链国际部';
   html += '</td></tr>';
   html += '</table></body></html>';
@@ -1275,9 +1325,9 @@ function exportAllSavedExcel() {
     const qDate = query.timestamp ? query.timestamp.substring(0, 10) : '未知';
 
     // Query separator header
-    html += '<tr><td colspan="5" style="height:8px;border:none;"></td></tr>';
+    html += '<tr><td colspan="6" style="height:8px;border:none;"></td></tr>';
     html += '<tr>';
-    html += '<td colspan="5" style="background:#6C757D;color:#FFFFFF;font-size:12px;font-weight:bold;padding:8px;">';
+    html += '<td colspan="6" style="background:#6C757D;color:#FFFFFF;font-size:12px;font-weight:bold;padding:8px;">';
     html += '查询 #' + (globalIdx + 1) + '：' + query.query + ' （' + qDate + '，' + query.results.length + ' 条匹配）';
     html += '</td></tr>';
 
@@ -1309,6 +1359,7 @@ function exportAllSavedExcel() {
         html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;">' + country.flag + ' ' + country.name + '</td>';
         html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;text-align:center;font-family:Consolas,monospace;">' + code + '</td>';
         html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;text-align:center;' + excelRateStyle(mfn) + '">' + mfn.toFixed(1) + '%</td>';
+        html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;text-align:center;background:#F0F7FF;font-weight:bold;color:#1565C0;font-size:11px;">' + (country.vat || '-') + ' (' + (country.vatType || '') + ')</td>';
         html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;font-size:11px;">' + note + '</td>';
         html += '<td style="padding:6px 10px;border:1px solid #E0E0E0;text-align:center;font-size:11px;">' + level + '</td>';
         html += '</tr>';
@@ -1318,8 +1369,8 @@ function exportAllSavedExcel() {
   });
 
   // Footer
-  html += '<tr><td colspan="5" style="height:8px;border:none;"></td></tr>';
-  html += '<tr><td colspan="5" style="background:#F8F9FA;font-size:10px;color:#667085;padding:8px;text-align:center;">';
+  html += '<tr><td colspan="6" style="height:8px;border:none;"></td></tr>';
+  html += '<tr><td colspan="6" style="background:#F8F9FA;font-size:10px;color:#667085;padding:8px;text-align:center;">';
   html += '本报告由药品关税看板系统自动生成 · 共 ' + globalIdx + ' 条查询记录 · 数据仅供参考，以各国海关官方公告为准 · 华仁供应链国际部';
   html += '</td></tr>';
   html += '</table></body></html>';
