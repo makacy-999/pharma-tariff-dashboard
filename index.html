@@ -3,7 +3,7 @@
 <!--
 ================================================================================
   药品关税每日简报看板 (Pharma Tariff Dashboard)
-  Version: v4.1
+  Version: v4.2
   
   Copyright (c) 2026 郭立静 (Guo Lijing). All rights reserved.
   版权所有 (c) 2026 郭立静. 保留所有权利.
@@ -803,7 +803,7 @@ table.data-table .num {
 /* ============================================================
    v3.9 响应式自适应增强（Responsive Enhancement）
    v4.0 移动端全显示：柱状图自适应16国全显示、VAT对比表卡片化（Mobile Full-View）
-   v4.1 VAT卡片化改为HTML静态实现（不依赖JS），修复手机webview表格挤压竖排
+   v4.1 VAT卡片化改为HTML静态实现（不依赖JS）；v4.2 修复注入JS误插入主脚本字符串导致Tab失效/报错，VAT表恢复原表格结构仅调列宽
    断点：1024px 小屏平板/小笔记本 · 768px 手机横屏/大手机 · 480px 手机竖屏 · 360px 超小屏
    ============================================================ */
 @media (max-width: 1024px) {
@@ -976,80 +976,30 @@ table.data-table .num {
   .bar-chart .y-line { left: 26px; }
   .bar-chart .y-axis { bottom: 50px; }
 }
-/* --- VAT 增值税/消费税对比表：768px 以下卡片化，长文本完整显示 --- */
+/* v4.2: VAT 卡片化 CSS 已移除（改回表格列宽方案） */
+
+
+/* v4.2: v4.1 卡片CSS 已移除 */
+
+
+/* v4.2: VAT 增值税/消费税对比表 - 保持原表格结构，手机端紧凑列宽，四列完整显示 */
 @media (max-width: 768px) {
-  .vat-card-table { display: block; width: 100% !important; font-size: 12.5px !important; }
-  .vat-card-table thead { display: none; }
-  .vat-card-table tbody { display: block; }
-  .vat-card-table tr {
-    display: block;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    margin-bottom: 10px;
-    padding: 10px 12px;
-    background: #fff !important;
-    box-shadow: 0 1px 3px rgba(11,31,58,0.05);
-  }
-  .vat-card-table td {
-    display: block !important;
-    width: 100% !important;
-    text-align: left !important;
-    border-bottom: none !important;
-    padding: 4px 0 !important;
+  table.vat-card-table { font-size: 11px !important; table-layout: fixed; }
+  table.vat-card-table th, table.vat-card-table td {
+    padding: 7px 6px !important;
     word-break: break-word;
-    line-height: 1.6;
+    line-height: 1.5;
   }
-  .vat-card-table td:first-child { font-size: 14px; margin-bottom: 4px; }
-  .vat-card-table td[data-label]::before {
-    content: attr(data-label);
-    display: inline-block;
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-right: 6px;
-  }
+  table.vat-card-table th:nth-child(1), table.vat-card-table td:nth-child(1) { width: 21% !important; white-space: nowrap; }
+  table.vat-card-table th:nth-child(2), table.vat-card-table td:nth-child(2) { width: 13% !important; white-space: nowrap; text-align: center !important; }
+  table.vat-card-table th:nth-child(3), table.vat-card-table td:nth-child(3) { width: 17% !important; white-space: normal; text-align: center !important; line-height: 1.35; }
+  table.vat-card-table th:nth-child(4), table.vat-card-table td:nth-child(4) { width: 49% !important; font-size: 10.5px; }
 }
-
-
-/* v4.1: VAT 卡片化样式增强（静态HTML实现，不依赖JS） */
-@media (max-width: 768px) {
-  table.vat-card-table { display: block !important; width: 100% !important; }
-  table.vat-card-table thead { display: none !important; }
-  table.vat-card-table tbody { display: block !important; }
-  table.vat-card-table tr {
-    display: block !important;
-    border: 1px solid #E5E7EB;
-    border-radius: 12px;
-    margin-bottom: 12px;
-    padding: 12px 14px;
-    background: #fff !important;
-    box-shadow: 0 2px 6px rgba(11,31,58,0.06);
-  }
-  table.vat-card-table td {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    text-align: left !important;
-    border-bottom: none !important;
-    padding: 5px 0 !important;
-    word-break: break-word;
-    line-height: 1.65;
-    font-size: 12.5px;
-  }
-  table.vat-card-table td:first-child {
-    font-size: 15px !important;
-    font-weight: 700 !important;
-    padding-bottom: 6px !important;
-    margin-bottom: 4px;
-    border-bottom: 1px dashed #EEF1F5 !important;
-  }
-  table.vat-card-table td[data-label]::before {
-    content: attr(data-label);
-    display: inline-block;
-    min-width: 92px;
-    font-size: 11.5px;
-    color: #9CA3AF;
-    font-weight: 600;
-  }
+@media (max-width: 480px) {
+  table.vat-card-table { font-size: 10.5px !important; }
+  table.vat-card-table th, table.vat-card-table td { padding: 6px 4px !important; }
+  table.vat-card-table th:nth-child(4), table.vat-card-table td:nth-child(4) { font-size: 10px; line-height: 1.45; }
+  table.vat-card-table th:nth-child(1), table.vat-card-table td:nth-child(1) { font-size: 10.5px; }
 }
 
 </style>
@@ -1720,7 +1670,7 @@ table.data-table .num {
   <!-- Footer -->
   <footer class="footer">
     <div>⚠️ 本看板数据仅供参考，具体通关请以各国海关当期公布税率为准。AI生成内容，不构成贸易决策建议。</div>
-    <div>关税顾问 · 国际部内部参考 · <span style="font-size:11px;opacity:0.7;">v4.1（移动端全显示版 · 回滚标签：v2.0-pre-vat）</span></div>
+    <div>关税顾问 · 国际部内部参考 · <span style="font-size:11px;opacity:0.7;">v4.2（移动端全显示版 · 回滚标签：v2.0-pre-vat）</span></div>
   </footer>
 
 </main>
@@ -2148,34 +2098,7 @@ function exportCurrentExcel() {
   html += '<tr><td colspan="6" style="background:#F8F9FA;font-size:10px;color:#667085;padding:8px;text-align:center;">';
   html += '本报告由药品关税看板系统自动生成 · 数据仅供参考，以各国海关官方公告为准 · 华仁供应链国际部';
   html += '</td></tr>';
-  html += '</table>
-<script>
-/* v4.0: VAT 对比表移动端卡片化 - 标记表格并注入字段标签 */
-(function () {
-  try {
-    var tables = document.querySelectorAll('table');
-    for (var t = 0; t < tables.length; t++) {
-      var thText = (tables[t].querySelector('thead') || {}).innerText || '';
-      if (thText.indexOf('标准税率') !== -1 && thText.indexOf('药品适用说明') !== -1) {
-        tables[t].classList.add('vat-card-table');
-        var heads = tables[t].querySelectorAll('thead th');
-        var labels = [];
-        for (var h = 0; h < heads.length; h++) labels.push(heads[h].textContent.trim());
-        var rows = tables[t].querySelectorAll('tbody tr');
-        for (var r = 0; r < rows.length; r++) {
-          var tds = rows[r].querySelectorAll('td');
-          for (var c = 1; c < tds.length && c < labels.length; c++) {
-            tds[c].setAttribute('data-label', labels[c] + '：');
-          }
-        }
-        break;
-      }
-    }
-  } catch (e) { /* 卡片化为增强功能，失败不影响页面 */ }
-})();
-</script>
-
-</body></html>';
+  html += '</table></body></html>';
 
   const queryClean = data.query.replace(/[^a-zA-Z0-9\u4e00-\u9fa5]/g, '_');
   downloadExcel(html, 'HS编码查询_' + queryClean + '_' + dateStr + '.xls');
