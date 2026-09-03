@@ -3,7 +3,7 @@
 <!--
 ================================================================================
   药品关税每日简报看板 (Pharma Tariff Dashboard)
-  Version: v4.0
+  Version: v4.1
   
   Copyright (c) 2026 郭立静 (Guo Lijing). All rights reserved.
   版权所有 (c) 2026 郭立静. 保留所有权利.
@@ -803,6 +803,7 @@ table.data-table .num {
 /* ============================================================
    v3.9 响应式自适应增强（Responsive Enhancement）
    v4.0 移动端全显示：柱状图自适应16国全显示、VAT对比表卡片化（Mobile Full-View）
+   v4.1 VAT卡片化改为HTML静态实现（不依赖JS），修复手机webview表格挤压竖排
    断点：1024px 小屏平板/小笔记本 · 768px 手机横屏/大手机 · 480px 手机竖屏 · 360px 超小屏
    ============================================================ */
 @media (max-width: 1024px) {
@@ -1005,6 +1006,49 @@ table.data-table .num {
     font-size: 11px;
     color: var(--text-muted);
     margin-right: 6px;
+  }
+}
+
+
+/* v4.1: VAT 卡片化样式增强（静态HTML实现，不依赖JS） */
+@media (max-width: 768px) {
+  table.vat-card-table { display: block !important; width: 100% !important; }
+  table.vat-card-table thead { display: none !important; }
+  table.vat-card-table tbody { display: block !important; }
+  table.vat-card-table tr {
+    display: block !important;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    padding: 12px 14px;
+    background: #fff !important;
+    box-shadow: 0 2px 6px rgba(11,31,58,0.06);
+  }
+  table.vat-card-table td {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    text-align: left !important;
+    border-bottom: none !important;
+    padding: 5px 0 !important;
+    word-break: break-word;
+    line-height: 1.65;
+    font-size: 12.5px;
+  }
+  table.vat-card-table td:first-child {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    padding-bottom: 6px !important;
+    margin-bottom: 4px;
+    border-bottom: 1px dashed #EEF1F5 !important;
+  }
+  table.vat-card-table td[data-label]::before {
+    content: attr(data-label);
+    display: inline-block;
+    min-width: 92px;
+    font-size: 11.5px;
+    color: #9CA3AF;
+    font-weight: 600;
   }
 }
 
@@ -1214,7 +1258,7 @@ table.data-table .num {
       <h2 class="section-title">各国增值税/消费税税率对比</h2>
       <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">增值税/消费税是进口药品在通关环节额外征收的国内税，直接影响最终进口成本。不同国家对药品可能适用标准税率或优惠税率。</p>
       <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);">
-        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <table class="vat-card-table" style="width:100%;border-collapse:collapse;font-size:12px;">
           <thead>
             <tr style="background:var(--gradient-primary);color:#fff;">
               <th style="padding:12px 14px;text-align:left;width:130px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;">国家/地区</th>
@@ -1224,22 +1268,22 @@ table.data-table .num {
             </tr>
           </thead>
           <tbody>
-            <tr style="background:#ECFDF5;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇺🇸 美国</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">销售税</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">各州0-10%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">无联邦增值税；各州销售税0-10%不等，部分州对处方药豁免</td></tr>
-            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇪🇺 欧盟</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">19-27%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">德国19%、法国20%、意大利22%；多数成员国对药品适用5-10%优惠税率</td></tr>
-            <tr style="background:#FAFBFC;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇯🇵 日本</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">消费税</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">10%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">统一10%；部分生活必需品适用8%轻减税率</td></tr>
-            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇬🇧 英国</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">20%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">处方药（NHS报销）免税；OTC药品适用5%优惠税率</td></tr>
-            <tr style="background:#ECFDF5;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇨🇭 瑞士</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#059669;">8.1%→2.6%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#059669;font-weight:500;">药品适用优惠税率2.6%（标准税率8.1%）</td></tr>
-            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇨🇦 加拿大</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">GST/HST</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">5-15%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">联邦GST 5%；部分省合并为HST 13-15%；处方药多省豁免</td></tr>
-            <tr style="background:#FAFBFC;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇦🇺 澳大利亚</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">GST</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">10%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">统一GST 10%；部分PBS补贴药品免税</td></tr>
-            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇸🇬 新加坡</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">GST</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">9%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">2024年起从8%上调至9%；药品统一适用9%</td></tr>
-            <tr style="background:#FEF2F2;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇨🇳 中国</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">增值税</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#DC2626;">13%/3%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#DC2626;font-weight:500;">一般药品13%；抗癌药品及原料药适用3%简易征收</td></tr>
-            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇰🇷 韩国</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">10%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">统一10%；医疗服务免税，药品适用10%</td></tr>
-            <tr style="background:#FAFBFC;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇹🇭 泰国</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">7%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">优惠税率7%（标准10%），延长至2026年底；基本药品豁免</td></tr>
-            <tr style="background:#FEF2F2;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇧🇷 巴西</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">ICMS</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#DC2626;">17-20%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#DC2626;font-weight:500;">州级ICMS 17-20%+联邦PIS/COFINS约9.25%；综合税负极高</td></tr>
-            <tr style="background:#FAFBFC;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇮🇳 印度</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">IGST</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">5/12%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">生命 Essential 药品5%；其他药品12%；另征SWS附加税</td></tr>
-            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇮🇩 印度尼西亚</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">PPN</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#DC2626;">12%（有效11%）</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#DC2626;font-weight:500;">标准12%，税基按11/12计算实际11%；另征PPh 2.5%进口所得税</td></tr>
-            <tr style="background:#FEF2F2;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇷🇺 俄罗斯</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#DC2626;">22%/10%</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#DC2626;font-weight:500;">2026年起标准税率升至22%；药品适用优惠税率10%</td></tr>
-            <tr style="background:#ECFDF5;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇲🇾 马来西亚</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">SST</td><td style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#059669;">药品免税</td><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#059669;font-weight:500;">HS30章药品免销售税；无增值税，服务税6%仅面向非公民医疗</td></tr>
+            <tr style="background:#ECFDF5;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇺🇸 美国</td><td data-label="类型：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">销售税</td><td data-label="标准税率：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">各州0-10%</td><td data-label="药品适用说明：" style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">无联邦增值税；各州销售税0-10%不等，部分州对处方药豁免</td></tr>
+            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇪🇺 欧盟</td><td data-label="类型：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td data-label="标准税率：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">19-27%</td><td data-label="药品适用说明：" style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">德国19%、法国20%、意大利22%；多数成员国对药品适用5-10%优惠税率</td></tr>
+            <tr style="background:#FAFBFC;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇯🇵 日本</td><td data-label="类型：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">消费税</td><td data-label="标准税率：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">10%</td><td data-label="药品适用说明：" style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">统一10%；部分生活必需品适用8%轻减税率</td></tr>
+            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇬🇧 英国</td><td data-label="类型：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td data-label="标准税率：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">20%</td><td data-label="药品适用说明：" style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">处方药（NHS报销）免税；OTC药品适用5%优惠税率</td></tr>
+            <tr style="background:#ECFDF5;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇨🇭 瑞士</td><td data-label="类型：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td data-label="标准税率：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#059669;">8.1%→2.6%</td><td data-label="药品适用说明：" style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#059669;font-weight:500;">药品适用优惠税率2.6%（标准税率8.1%）</td></tr>
+            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇨🇦 加拿大</td><td data-label="类型：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">GST/HST</td><td data-label="标准税率：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">5-15%</td><td data-label="药品适用说明：" style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">联邦GST 5%；部分省合并为HST 13-15%；处方药多省豁免</td></tr>
+            <tr style="background:#FAFBFC;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇦🇺 澳大利亚</td><td data-label="类型：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">GST</td><td data-label="标准税率：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">10%</td><td data-label="药品适用说明：" style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">统一GST 10%；部分PBS补贴药品免税</td></tr>
+            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇸🇬 新加坡</td><td data-label="类型：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">GST</td><td data-label="标准税率：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">9%</td><td data-label="药品适用说明：" style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">2024年起从8%上调至9%；药品统一适用9%</td></tr>
+            <tr style="background:#FEF2F2;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇨🇳 中国</td><td data-label="类型：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">增值税</td><td data-label="标准税率：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#DC2626;">13%/3%</td><td data-label="药品适用说明：" style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#DC2626;font-weight:500;">一般药品13%；抗癌药品及原料药适用3%简易征收</td></tr>
+            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇰🇷 韩国</td><td data-label="类型：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td data-label="标准税率：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">10%</td><td data-label="药品适用说明：" style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">统一10%；医疗服务免税，药品适用10%</td></tr>
+            <tr style="background:#FAFBFC;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇹🇭 泰国</td><td data-label="类型：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td data-label="标准税率：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">7%</td><td data-label="药品适用说明：" style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">优惠税率7%（标准10%），延长至2026年底；基本药品豁免</td></tr>
+            <tr style="background:#FEF2F2;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇧🇷 巴西</td><td data-label="类型：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">ICMS</td><td data-label="标准税率：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#DC2626;">17-20%</td><td data-label="药品适用说明：" style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#DC2626;font-weight:500;">州级ICMS 17-20%+联邦PIS/COFINS约9.25%；综合税负极高</td></tr>
+            <tr style="background:#FAFBFC;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇮🇳 印度</td><td data-label="类型：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">IGST</td><td data-label="标准税率：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#0B1F3A;">5/12%</td><td data-label="药品适用说明：" style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#6B7280;">生命 Essential 药品5%；其他药品12%；另征SWS附加税</td></tr>
+            <tr><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇮🇩 印度尼西亚</td><td data-label="类型：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">PPN</td><td data-label="标准税率：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#DC2626;">12%（有效11%）</td><td data-label="药品适用说明：" style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#DC2626;font-weight:500;">标准12%，税基按11/12计算实际11%；另征PPh 2.5%进口所得税</td></tr>
+            <tr style="background:#FEF2F2;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇷🇺 俄罗斯</td><td data-label="类型：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">VAT</td><td data-label="标准税率：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#DC2626;">22%/10%</td><td data-label="药品适用说明：" style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#DC2626;font-weight:500;">2026年起标准税率升至22%；药品适用优惠税率10%</td></tr>
+            <tr style="background:#ECFDF5;"><td style="padding:10px 14px;border-bottom:1px solid #F3F4F6;font-weight:600;color:#0B1F3A;">🇲🇾 马来西亚</td><td data-label="类型：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;color:#6B7280;">SST</td><td data-label="标准税率：" style="padding:10px 14px;text-align:center;border-bottom:1px solid #F3F4F6;font-family:var(--font-mono);font-weight:600;color:#059669;">药品免税</td><td data-label="药品适用说明：" style="padding:10px 14px;border-bottom:1px solid #F3F4F6;color:#059669;font-weight:500;">HS30章药品免销售税；无增值税，服务税6%仅面向非公民医疗</td></tr>
           </tbody>
         </table>
       </div>
@@ -1676,7 +1720,7 @@ table.data-table .num {
   <!-- Footer -->
   <footer class="footer">
     <div>⚠️ 本看板数据仅供参考，具体通关请以各国海关当期公布税率为准。AI生成内容，不构成贸易决策建议。</div>
-    <div>关税顾问 · 国际部内部参考 · <span style="font-size:11px;opacity:0.7;">v4.0（移动端全显示版 · 回滚标签：v2.0-pre-vat）</span></div>
+    <div>关税顾问 · 国际部内部参考 · <span style="font-size:11px;opacity:0.7;">v4.1（移动端全显示版 · 回滚标签：v2.0-pre-vat）</span></div>
   </footer>
 
 </main>
